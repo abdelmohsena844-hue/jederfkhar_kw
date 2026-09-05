@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الاستراتيجية التسويقية — مطعم جدر فخار</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700;800;900&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241a14;
+    --ink-soft:#4a382c;
+    --parchment:#f7efe0;
+    --parchment-deep:#eee0c4;
+    --parchment-line: rgba(36,26,20,0.14);
+    --clay:#b6512f;
+    --clay-deep:#7e3620;
+    --clay-soft: rgba(182,81,47,0.10);
+    --gold:#c69a3a;
+    --gold-soft: rgba(198,154,58,0.14);
+    --maroon:#5c231f;
+    --night:#211712;
+    --night-deep:#170f0b;
+    --cream-paper:#fbf6ea;
+    --shadow: 0 18px 40px -20px rgba(23,15,11,0.45);
+    --radius: 4px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Cairo', sans-serif;
+    font-weight:400;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background: var(--gold); color:var(--night-deep); }
+
+  h1,h2,h3,h4{
+    font-family:'Aref Ruqaa', serif;
+    color:var(--maroon);
+    margin:0;
+    font-weight:700;
+    line-height:1.35;
+  }
+
+  a{ color:var(--clay-deep); }
+
+  img,svg{ max-width:100%; display:block; }
+
+  p{ margin:0 0 1em; max-width:74ch; }
+  ul{ margin:0 0 1em; padding-inline-start:1.3em; }
+  li{ margin-bottom:.55em; max-width:72ch; }
+  li::marker{ color:var(--clay); }
+  li ul{ margin-top:.6em; }
+
+  strong{ color:var(--maroon); font-weight:700; }
+
+  /* ============ layout shell ============ */
+  .app{
+    display:grid;
+    grid-template-columns: 1fr 288px;
+    align-items:start;
+  }
+  main{ min-width:0; }
+
+  /* ============ sadu / heritage divider ============ */
+  .sadu{
+    height:26px;
+    width:100%;
+    background-color:var(--clay-deep);
+    background-image:
+      linear-gradient(135deg, var(--gold) 25%, transparent 25.5%),
+      linear-gradient(225deg, var(--gold) 25%, transparent 25.5%),
+      linear-gradient(315deg, var(--gold) 25%, transparent 25.5%),
+      linear-gradient(45deg,  var(--gold) 25%, transparent 25.5%);
+    background-position: 0 0, 0 0, 0 0, 0 0;
+    background-size: 26px 26px;
+    background-repeat: repeat;
+  }
+  .sadu.thin{ height:10px; background-size:14px 14px; opacity:.85; }
+
+  /* ============ side navigation ============ */
+  .toc{
+    position: sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    background:var(--night);
+    color:var(--parchment-deep);
+    padding:34px 26px 30px;
+    border-inline-start: 6px solid var(--gold);
+  }
+  .toc::-webkit-scrollbar{ width:8px; }
+  .toc::-webkit-scrollbar-thumb{ background:var(--clay-deep); border-radius:8px; }
+  .toc-brand{
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:26px; padding-bottom:22px;
+    border-bottom:1px solid rgba(198,154,58,0.28);
+  }
+  .toc-brand .mark{ width:44px; height:44px; flex:none; }
+  .toc-brand .name{ font-family:'Aref Ruqaa',serif; color:var(--gold); font-size:1.32rem; line-height:1.25; }
+  .toc-brand .sub{ font-family:'Reem Kufi',sans-serif; color:rgba(247,239,224,0.55); font-size:.68rem; letter-spacing:.03em; margin-top:2px;}
+
+  .toc-list{ list-style:none; margin:0; padding:0; }
+  .toc-list a{
+    display:flex; align-items:baseline; gap:10px;
+    text-decoration:none;
+    color:rgba(247,239,224,0.72);
+    font-size:.92rem;
+    padding:9px 10px;
+    border-radius:3px;
+    transition: background .2s ease, color .2s ease;
+  }
+  .toc-list a .num{
+    font-family:'Reem Kufi', sans-serif;
+    color:var(--gold);
+    font-size:.78rem;
+    flex:none;
+  }
+  .toc-list a:hover, .toc-list a.active{
+    background:rgba(198,154,58,0.14);
+    color:var(--parchment);
+  }
+  .toc-list a.active{ box-shadow: inset 3px 0 0 var(--gold); }
+  .toc-list .sublist{ list-style:none; margin:2px 0 8px; padding-inline-end:22px; }
+  .toc-list .sublist a{ font-size:.8rem; padding:5px 10px; color:rgba(247,239,224,0.5); }
+
+  .toc-foot{
+    margin-top:24px; padding-top:18px;
+    border-top:1px solid rgba(198,154,58,0.22);
+    font-size:.72rem; color:rgba(247,239,224,0.4);
+    font-family:'Reem Kufi', sans-serif;
+  }
+
+  /* mobile nav toggle */
+  .nav-toggle{
+    display:none;
+    position:fixed; z-index:60; top:16px; left:16px;
+    width:46px; height:46px; border-radius:50%;
+    background:var(--night); border:1px solid var(--gold);
+    color:var(--gold); align-items:center; justify-content:center;
+    box-shadow:var(--shadow);
+  }
+  .nav-toggle svg{ width:20px; height:20px; }
+
+  /* ============ hero / cover ============ */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(ellipse at 50% -10%, rgba(198,154,58,0.16), transparent 55%),
+      var(--night-deep);
+    color:var(--parchment);
+    padding:70px 24px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(198,154,58,0.05) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(0deg, rgba(198,154,58,0.05) 0 1px, transparent 1px 64px);
+    pointer-events:none;
+  }
+  .hero-mark{ width:120px; height:120px; margin:0 auto 22px; position:relative; z-index:1;}
+  .hero .eyebrow{
+    position:relative; z-index:1;
+    font-family:'Reem Kufi', sans-serif;
+    color:var(--gold);
+    font-size:.86rem;
+    letter-spacing:.05em;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    position:relative; z-index:1;
+    color:var(--parchment);
+    font-size:clamp(2.6rem, 6vw, 5rem);
+    margin-bottom:14px;
+  }
+  .hero .tagline{
+    position:relative; z-index:1;
+    font-size:1.25rem;
+    color:var(--gold);
+    font-family:'Aref Ruqaa', serif;
+    margin-bottom:30px;
+  }
+  .hero .desc{
+    position:relative; z-index:1;
+    max-width:62ch; margin:0 auto 34px;
+    color:rgba(247,239,224,0.75);
+    font-size:1.02rem;
+  }
+  .hero .meta-row{
+    position:relative; z-index:1;
+    display:flex; flex-wrap:wrap; gap:14px; justify-content:center;
+  }
+  .hero .meta-pill{
+    border:1px solid rgba(198,154,58,0.4);
+    color:var(--parchment-deep);
+    background:rgba(198,154,58,0.08);
+    padding:9px 20px;
+    border-radius:30px;
+    font-size:.86rem;
+  }
+  .hero .scroll-cue{
+    position:absolute; bottom:26px; left:50%; transform:translateX(-50%);
+    z-index:1; color:rgba(247,239,224,0.5); font-size:.78rem;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-family:'Reem Kufi', sans-serif;
+  }
+  .scroll-cue .line{ width:1px; height:34px; background:linear-gradient(var(--gold), transparent); }
+
+  /* ============ section shell ============ */
+  section.plan-section{
+    padding:96px 8vw 90px;
+    max-width:1180px;
+    margin:0 auto;
+    scroll-margin-top:20px;
+  }
+  section.plan-section.alt{ background:var(--parchment-deep); }
+  .section-head{
+    display:flex; align-items:flex-start; gap:24px;
+    margin-bottom:46px;
+  }
+  .section-head .big-num{
+    font-family:'Reem Kufi', sans-serif;
+    font-size:4.2rem;
+    color:var(--gold);
+    line-height:1;
+    opacity:.85;
+    flex:none;
+  }
+  .section-head h2{ font-size:clamp(1.7rem, 3vw, 2.5rem); }
+  .section-head .kicker{
+    font-family:'Reem Kufi', sans-serif;
+    font-size:.78rem;
+    color:var(--clay-deep);
+    letter-spacing:.03em;
+    margin-bottom:6px;
+    display:block;
+  }
+
+  h3.sub-title{
+    font-size:1.35rem;
+    color:var(--clay-deep);
+    margin: 40px 0 16px;
+    padding-inline-start:16px;
+    border-inline-start:4px solid var(--gold);
+  }
+  h4.mini-title{
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    color:var(--maroon);
+    font-size:1.05rem;
+    margin: 22px 0 10px;
+  }
+
+  .lead{
+    font-size:1.12rem;
+    color:var(--ink-soft);
+    border-inline-start:3px solid var(--clay);
+    padding-inline-start:18px;
+    margin-bottom:34px;
+  }
+
+  /* cards */
+  .card{
+    background:var(--cream-paper);
+    border:1px solid var(--parchment-line);
+    border-radius:var(--radius);
+    padding:26px 28px;
+    box-shadow:var(--shadow);
+  }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+
+  /* SWOT */
+  .swot-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:10px; }
+  .swot-card{
+    padding:26px 26px 22px;
+    border-radius:var(--radius);
+    position:relative;
+    color:var(--parchment);
+  }
+  .swot-card h4{ font-family:'Aref Ruqaa',serif; font-size:1.3rem; color:inherit; margin-bottom:14px; }
+  .swot-card ul{ margin-bottom:0; }
+  .swot-card li::marker{ color:rgba(255,255,255,0.6); }
+  .swot-card.s{ background:linear-gradient(160deg,#4c6b4a,#37502f); }
+  .swot-card.w{ background:linear-gradient(160deg,var(--maroon),#3c1512); }
+  .swot-card.o{ background:linear-gradient(160deg,var(--clay-deep),#7a3a19); }
+  .swot-card.t{ background:linear-gradient(160deg,#3a3126,var(--night)); }
+  .swot-card li{ color:rgba(255,255,255,0.92); }
+
+  .strategy-list{ list-style:none; padding:0; margin:26px 0 0; display:grid; gap:14px;}
+  .strategy-list li{
+    background:var(--gold-soft);
+    border-inline-start:4px solid var(--gold);
+    padding:16px 18px;
+    border-radius:3px;
+    max-width:none;
+  }
+
+  /* competitor cards */
+  .competitor{
+    background:var(--cream-paper);
+    border:1px solid var(--parchment-line);
+    border-radius:var(--radius);
+    padding:0;
+    margin-bottom:26px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .competitor-head{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    flex-wrap:wrap;
+    background:var(--night);
+    color:var(--parchment);
+    padding:22px 26px;
+  }
+  .competitor-head h4{ color:var(--gold); font-family:'Aref Ruqaa',serif; font-size:1.4rem; }
+  .competitor-head .stat{ text-align:center; }
+  .competitor-head .stat .n{ font-family:'Reem Kufi',sans-serif; font-size:1.6rem; color:var(--parchment); }
+  .competitor-head .stat .l{ font-size:.72rem; color:rgba(247,239,224,0.55); }
+  .competitor-head a{ color:var(--gold); font-size:.82rem; }
+  .competitor-body{ padding:26px 26px 10px; }
+
+  details.idea{
+    background:var(--cream-paper);
+    border:1px solid var(--parchment-line);
+    border-radius:var(--radius);
+    margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  details.idea > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:20px 24px;
+    display:flex; align-items:center; gap:16px;
+    font-family:'Aref Ruqaa',serif;
+    color:var(--maroon);
+    font-size:1.12rem;
+  }
+  details.idea > summary::-webkit-details-marker{ display:none; }
+  details.idea > summary .idx{
+    font-family:'Reem Kufi',sans-serif;
+    background:var(--clay);
+    color:#fff;
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:.95rem; flex:none;
+  }
+  details.idea > summary .chev{ margin-inline-start:auto; transition:transform .25s ease; color:var(--gold); flex:none;}
+  details.idea[open] > summary .chev{ transform:rotate(180deg); }
+  details.idea .idea-body{ padding:0 26px 26px 26px; }
+  details.idea .goal{
+    background:var(--gold-soft);
+    border-inline-start:4px solid var(--gold);
+    padding:12px 16px; border-radius:3px; margin-bottom:16px; font-weight:600; max-width:none;
+  }
+
+  /* persona cards */
+  .persona{
+    background:var(--cream-paper); border:1px solid var(--parchment-line);
+    border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .persona-head{
+    background:linear-gradient(120deg,var(--clay-deep),var(--maroon));
+    color:var(--parchment); padding:22px 24px;
+  }
+  .persona-head h4{ color:var(--gold); font-family:'Aref Ruqaa',serif; font-size:1.3rem; margin-bottom:4px;}
+  .persona-head .age{ font-size:.85rem; color:rgba(247,239,224,0.75); }
+  .persona-body{ padding:22px 24px; }
+  .persona-body dl{ margin:0; }
+  .persona-body dt{ font-family:'Cairo'; font-weight:800; color:var(--clay-deep); margin-top:14px; font-size:.92rem;}
+  .persona-body dt:first-child{ margin-top:0; }
+  .persona-body dd{ margin:4px 0 0; color:var(--ink-soft); }
+
+  /* tables */
+  .table-wrap{ overflow-x:auto; margin:18px 0 30px; border-radius:var(--radius); box-shadow:var(--shadow); }
+  table{ border-collapse:collapse; width:100%; min-width:560px; background:var(--cream-paper); }
+  thead th{
+    background:var(--maroon); color:var(--parchment);
+    font-family:'Cairo'; font-weight:700; font-size:.88rem;
+    padding:14px 16px; text-align:right; white-space:normal;
+  }
+  tbody td{
+    padding:13px 16px; border-bottom:1px solid var(--parchment-line);
+    font-size:.92rem; color:var(--ink-soft); vertical-align:top;
+  }
+  tbody tr:nth-child(even){ background:rgba(182,81,47,0.045); }
+  tbody tr:last-child td{ border-bottom:none; }
+
+  /* dos donts */
+  .dos-donts{ display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin:18px 0 30px;}
+  .dos-donts .col{ padding:22px 24px; }
+  .dos-donts .col.do{ background: rgba(76,107,74,0.10); border-inline-end:1px solid var(--parchment-line);}
+  .dos-donts .col.dont{ background: rgba(92,35,31,0.06); }
+  .dos-donts h4{ font-size:1rem; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .dos-donts .item{ padding:12px 0; border-top:1px dashed var(--parchment-line); font-size:.92rem; color:var(--ink-soft); }
+  .dos-donts .item:first-of-type{ border-top:none; }
+
+  /* lexicon */
+  .lexicon{ display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 26px; }
+  .lexicon span{
+    background:var(--clay-soft); border:1px solid rgba(182,81,47,0.28);
+    color:var(--clay-deep); padding:8px 16px; border-radius:30px; font-size:.9rem; font-weight:600;
+  }
+
+  /* value prop equation */
+  .equation{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px;
+    margin:26px 0 30px; padding:26px; background:var(--night); border-radius:var(--radius);
+  }
+  .equation .term{
+    background:rgba(198,154,58,0.12); border:1px solid rgba(198,154,58,0.4);
+    color:var(--parchment); padding:12px 20px; border-radius:4px; font-weight:700; font-size:.98rem;
+  }
+  .equation .op{ color:var(--gold); font-size:1.4rem; font-family:'Reem Kufi',sans-serif; }
+
+  .quote-block{
+    font-family:'Aref Ruqaa',serif; font-size:1.4rem; line-height:1.8; color:var(--maroon);
+    background:var(--gold-soft); border-radius:var(--radius);
+    padding:30px 34px; margin:24px 0 30px; position:relative; max-width:none;
+    border-inline-start:6px solid var(--gold);
+  }
+
+  /* funnel */
+  .funnel{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:18px 0 30px; }
+  .funnel .stage{
+    background:var(--cream-paper); border-top:6px solid var(--clay); border-radius:var(--radius);
+    padding:22px; box-shadow:var(--shadow);
+  }
+  .funnel .stage:nth-child(2){ border-top-color:var(--gold); }
+  .funnel .stage:nth-child(3){ border-top-color:var(--maroon); }
+  .funnel .stage .pct{ font-family:'Reem Kufi',sans-serif; font-size:2.1rem; color:var(--clay-deep); }
+  .funnel .stage h5{ font-family:'Cairo'; font-weight:800; margin:6px 0 10px; color:var(--maroon); font-size:1rem;}
+
+  /* platform cards */
+  .platform{ margin-bottom:30px; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+  .platform-head{ padding:18px 26px; color:#fff; font-family:'Aref Ruqaa',serif; font-size:1.25rem; display:flex; align-items:center; gap:12px;}
+  .platform-body{ background:var(--cream-paper); padding:24px 26px; border:1px solid var(--parchment-line); border-top:none; }
+  .platform.ig .platform-head{ background:linear-gradient(120deg,#8a3a20,#b6512f); }
+  .platform.tt .platform-head{ background:linear-gradient(120deg,#211712,#4a382c); }
+  .platform.sc .platform-head{ background:linear-gradient(120deg,#c69a3a,#8a6a1f); }
+
+  /* peak hours timeline */
+  .peak-row{ display:grid; grid-template-columns:170px 1fr; gap:18px; align-items:stretch; margin-bottom:12px; }
+  .peak-row .time{ font-family:'Reem Kufi',sans-serif; color:var(--clay-deep); font-size:.85rem; padding-top:14px;}
+  .peak-row .bar{ background:var(--cream-paper); border:1px solid var(--parchment-line); border-inline-start:6px solid var(--gold); border-radius:3px; padding:12px 18px; }
+  .peak-row.rest .bar{ border-inline-start-color: var(--ink-soft); opacity:.75; }
+
+  /* visual direction refs */
+  .ref-block{ margin-bottom:22px; padding-bottom:22px; border-bottom:1px dashed var(--parchment-line); }
+  .ref-block:last-child{ border-bottom:none; }
+  .ref-links{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+  .ref-links a{
+    font-size:.82rem; background:var(--clay-soft); padding:7px 14px; border-radius:20px;
+    text-decoration:none; border:1px solid rgba(182,81,47,0.25);
+  }
+
+  footer.plan-footer{
+    background:var(--night-deep); color:rgba(247,239,224,0.65);
+    text-align:center; padding:70px 24px 50px;
+  }
+  footer.plan-footer .mark{ width:60px; height:60px; margin:0 auto 18px; }
+  footer.plan-footer .brand{ font-family:'Aref Ruqaa',serif; color:var(--gold); font-size:1.5rem; margin-bottom:8px; }
+  footer.plan-footer .prepared{ font-family:'Reem Kufi',sans-serif; font-size:.82rem; letter-spacing:.03em; margin-top:22px; color:rgba(247,239,224,0.45); }
+
+  @media (max-width:980px){
+    .app{ grid-template-columns:1fr; }
+    .toc{
+      position:fixed; inset-inline-end:0; top:0; width:82%; max-width:320px;
+      transform:translateX(105%); transition:transform .3s ease; z-index:55;
+    }
+    html[dir="rtl"] .toc.open{ transform:translateX(0); }
+    .nav-toggle{ display:flex; }
+    section.plan-section{ padding:70px 6vw 60px; }
+    .grid-2, .grid-3, .swot-grid, .dos-donts, .funnel{ grid-template-columns:1fr; }
+    .dos-donts .col.do{ border-inline-end:none; border-bottom:1px solid var(--parchment-line); }
+    .section-head .big-num{ font-size:2.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<button class="nav-toggle" id="navToggle" aria-label="فتح فهرس المحتويات">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+
+<div class="app">
+<main>
+
+  <!-- ================= HERO / COVER ================= -->
+  <section class="hero" id="cover">
+    <div class="hero-mark">
+      <svg viewBox="0 0 120 120" fill="none">
+        <path d="M40 46 C40 30, 80 30, 80 46 L76 90 C76 100, 44 100, 44 90 Z" fill="none" stroke="#c69a3a" stroke-width="2.5"/>
+        <path d="M34 50 C 44 42, 76 42, 86 50" stroke="#c69a3a" stroke-width="2.5" fill="none"/>
+        <path d="M50 30 Q46 18 52 10" stroke="#c69a3a" stroke-width="2" fill="none" opacity="0.75"/>
+        <path d="M60 28 Q56 14 62 6" stroke="#c69a3a" stroke-width="2" fill="none" opacity="0.55"/>
+        <path d="M70 30 Q66 18 72 10" stroke="#c69a3a" stroke-width="2" fill="none" opacity="0.75"/>
+        <ellipse cx="60" cy="46" rx="20" ry="6" stroke="#c69a3a" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <span class="eyebrow">خطة تسويقية شاملة · إعداد داخلي</span>
+    <h1>جدر فخار</h1>
+    <div class="tagline">الخيار األول للقمة الطيبة والجمعة الراهية</div>
+    <p class="desc">الاستراتيجية التسويقية الكاملة لمطعم جدر فخار — الوجهة الكويتية الأصيلة للأكل التراثي والكبسات البرية في الفحيحيل، من تحليل السوق والمنافسين إلى هوية البراند وخطة المحتوى ومؤشرات الأداء.</p>
+    <div class="meta-row">
+      <span class="meta-pill">مطعم كويتي تراثي — الفحيحيل</span>
+      <span class="meta-pill">8 محاور استراتيجية</span>
+      <span class="meta-pill">إعداد: فريق التسويق</span>
+    </div>
+    <div class="scroll-cue"><span class="line"></span>مرر لاستعراض الاستراتيجية</div>
+  </section>
+
+  <div class="sadu"></div>
+
+  <!-- ================= SECTION 1: EXECUTIVE SUMMARY ================= -->
+  <section class="plan-section" id="sec1">
+    <div class="section-head">
+      <span class="big-num">١</span>
+      <div>
+        <span class="kicker">Executive Summary</span>
+        <h2>الملخص التنفيذي</h2>
+      </div>
+    </div>
+
+    <h3 class="sub-title">أولًا: نبذة عن المشروع (Company Overview)</h3>
+    <p>مطعم "جدر فخار" هو مطعم كويتي متخصص في تقديم أطباق الأرز والوجبات التراثية والخليجية الأصيلة (المجبوس، المضغوط، الكبسة البرية، البرياني، ومطبق الزبيدي). يقع المطعم في موقع استراتيجي على الشارع الرئيسي بمنطقة الفحيحيل، ويُعد الوجهة الوحيدة في المنطقة التي تجمع بين جودة المأكولات الكويتية والكبسات البرية في مكان واحد.</p>
+    <p>يمتلك المطعم صالة استقبال مجهزة للزبائن، إلى جانب خدمة توصيل خاص وتواجد على تطبيقات التوصيل (مثل تطبيق كيتا) ليغطي كافة مناطق دولة الكويت، وأيضًا خدمة استلام من السيارة.</p>
+
+    <h3 class="sub-title">ثانيًا: الرؤية والرسالة (Mission &amp; Vision)</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4 class="mini-title">الرؤية</h4>
+        <p style="margin:0;">أن يصبح جدر فخار العلامة التجارية الأولى والخيار المفضل للعائلات وأصحاب الديوانيات في الكويت عند البحث عن الوجبات التراثية الراهية والجودة العالية.</p>
+      </div>
+      <div class="card">
+        <h4 class="mini-title">الرسالة</h4>
+        <p style="margin:0;">تقديم تجربة طعام كويتية متكاملة بضيافة أصيلة داخل الصالة، وتوفير وجبات راهية مطبوخة يوميًا بأجود المكونات الطازجة، مع ضمان وصول الأكل خنين وساخن لكل منزل وديوانية في الكويت بنفس جودة خروجه من المطبخ.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">ثالثًا: التموضع الذهني وعرض القيمة (Positioning &amp; Value Proposition)</h3>
+    <div class="quote-block">التموضع الذهني: الخيار الأول للقمة الطيبة والجمعة الراهية.. طازج يوميًا، وخنين يوصلك دايركت.</div>
+    <p>عرض القيمة: نحن نقدم تجربة كرم كويتية متكاملة؛ نلتزم باستخدام اللحم النعيمي المحلي 100% والدجاج الطازج يوميًا، ونضمن تقديم وجبات راهية بتغليف حراري ممتاز يضمن وصول الأكل دايركت، ساخن، وخنين يبّيض الوجه أمام ضيوفك وفي جمعاتك.</p>
+
+    <h3 class="sub-title">رابعًا: ملخص الأهداف التسويقية الاستراتيجية (Key Objectives)</h3>
+    <ul>
+      <li><strong>زيادة حصة المبيعات وتنشيط قنوات التوصيل:</strong> تعزيز الطلبات المباشرة من المطعم وخصوصًا للديوانيات والجمعات العائلية، وترسيخ التواجد على تطبيق كيتا لزيادة معدل الطلبات الفردية والسريعة وتحسين جودة التوصيل الخاص بالمطعم.</li>
+      <li><strong>بناء الوعي والعلامة التجارية (Brand Awareness):</strong> إبراز التواجد الفريد للمطعم في منطقة الفحيحيل والتوسع في استهداف مناطق الكويت عبر حملات تسويقية مركزة.</li>
+      <li><strong>ترسيخ الثقة والولاء (Trust &amp; Retention):</strong> التأكيد المستمر على جودة الخامات (نعيمي محلي ودجاج فريش) للحد من تخوفات العملاء، وتحويل العميل الجديد إلى عميل دائم يستمر في إعادة الطلب.</li>
+    </ul>
+  </section>
+
+  <div class="sadu thin"></div>
+
+  <!-- ================= SECTION 2: SWOT ================= -->
+  <section class="plan-section alt" id="sec2">
+    <div class="section-head">
+      <span class="big-num">٢</span>
+      <div>
+        <span class="kicker">SWOT Analysis</span>
+        <h2>تحليل الوضع الحالي</h2>
+      </div>
+    </div>
+    <p class="lead">يتناول هذا التحليل تقييم البيئة الداخلية لمطعم "جدر فخار" (نقاط القوة والضعف) والبيئة الخارجية (الفرص والتهديدات) لبناء قرارات تسويقية قائمة على بيانات واقعية.</p>
+
+    <div class="swot-grid">
+      <div class="swot-card s">
+        <h4>نقاط القوة (Strengths)</h4>
+        <ul>
+          <li>جودة الخامات والمذاق التراثي: استخدام حصري لـ (لحم نعيمي محلي أصلي ودجاج طازج يوميًا وأرز فاخر)، بإشراف طاقم طهاة ذوي خبرة عالية.</li>
+          <li>الموقع والميزة الجغرافية الفريدة: التواجد على الشارع الرئيسي في منطقة حيوية بالفحيحيل، وكونه المطعم الوحيد في المنطقة الذي يدمج بين العيوش الكويتية والكبسات البرية.</li>
+          <li>مرونة وقنوات الخدمة المتنوعة: توفير خيارات متكاملة (تناول بالصالة، استلام من السيارة، توصيل خاص، وتواجد على تطبيق كيتا).</li>
+          <li>تميز الخدمة والنظافة: طاقم عمل ودود وحسن استقبال للزبائن، مع بيئة مطبخ شديدة النظافة والاحترافية تشكل بيئة مثالية لصناعة محتوى تسويقي مرئي (Behind the Scenes) لبناء الثقة.</li>
+        </ul>
+      </div>
+      <div class="swot-card w">
+        <h4>نقاط الضعف (Weaknesses)</h4>
+        <ul>
+          <li>ضعف التواجد الرقمي والوعي بالعلامة: غياب شبه تام عن منصات التواصل الاجتماعي، ووجود حساب انستغرام غير فعال بمتابعين وهميين، وعدم عمل حملة إشهار قوية عند الافتتاح.</li>
+          <li>المساحة الاستيعابية المحدودة للصالة: احتواء الصالة على 8 طاولات فقط، مما يسبب ازدحامًا وعدم قدرة على استيعاب كافة الزوار في أوقات الذروة.</li>
+          <li>محدودية التوصيل الحالي: الاعتماد على سائقين اثنين فقط، مما قد يعيق استيعاب ضغط الطلبات المباشرة الكبيرة في أوقات الذروة.</li>
+          <li>التسعير الأعلى قليلًا: ارتفاع السعر بنسبة بسيطة عن بعض المنافسين التقليديين نظرًا للاعتناء بجودة الخامات الطازجة.</li>
+        </ul>
+      </div>
+      <div class="swot-card o">
+        <h4>الفرص المتاحة (Opportunities)</h4>
+        <ul>
+          <li>التوسع في تسويق التوصيل (Delivery Focus): التغلب على ضيق الصالة بالتركيز على طلبات التوصيل للديوانيات والعائلات عبر التوصيل الخاص وتطبيق "كيتا".</li>
+          <li>صناعة المحتوى والتسويق عبر المؤثرين (Influencer Marketing): استغلال جودة الأكل ونظافة المطبخ لتنفيذ تغطيات مع صناع محتوى وبلوجرز معتمدين لتنشيط البراند.</li>
+          <li>تفعيل العروض والباقات الجماعية: إطلاق "عروض الجمعات والديوانيات" مع تقديم عروض افتتاحية ورقمية لجذب عملاء جدد.</li>
+          <li>استغلال منطقة الانتظار (Waiting Area): تنظيم خدمة "الاستلام السريع والانتظار" للعملاء لتقليل خسارة الزبائن أثناء ازدحام الصالة.</li>
+        </ul>
+      </div>
+      <div class="swot-card t">
+        <h4>التهديدات المحتملة (Threats)</h4>
+        <ul>
+          <li>مواقف السيارات المحدودة: توفر 3 مواقف فقط أمام المطعم، مما قد يشكل عائقًا لبعض زوار الصالة أو الاستلام المباشر.</li>
+          <li>تذبذب أسعار المواد الخام: الارتفاع المفاجئ في أسعار اللحوم والدواجن الطازجة مما يضغط على هامش الربح.</li>
+          <li>حدة المنافسة في قطاع التوصيل على التطبيقات: المنافسة الشديدة بين مطاعم الأرز على تطبيقات التوصيل وسرعة الوصول.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub-title">ثانيًا: الاستراتيجيات المشتقة من SWOT</h3>
+    <p>هنا هنشرح سريعًا إزاي نحول التحليل ده لخطة تسويقية فعّالة حقيقية..!</p>
+    <ul class="strategy-list">
+      <li><strong>استراتيجية القوة + الفرصة (S-O):</strong> استغلال جودة اللحم النعيمي ونظافة المطبخ لصناعة محتوى "حقيقي وشفاف" على السوشيال ميديا، واستخدام حملات المؤثرين لتسليط الضوء على أن المطعم هو الوحيد في الفحيحيل وأنه بهذه الجودة.</li>
+      <li><strong>استراتيجية الضعف + الفرصة (W-O):</strong> تعويض صغر حجم الصالة وقلة مواقف السيارات بالتركيز الشديد على حملات التوصيل، مع التوسع التدريجي في السائقين.</li>
+      <li><strong>استراتيجية القوة + التهديد (S-T):</strong> تبرير السعر الأعلى قليلًا للعميل من خلال إبراز الجودة القاطعة (نعيمي محلي ودجاج فريش) في المحتوى، ليتحول السعر من "نقطة ضعف" إلى "دليل جودة وإتقان".</li>
+    </ul>
+  </section>
+
+  <div class="sadu"></div>
+
+  <!-- ================= SECTION 2.1: COMPETITORS ================= -->
+  <section class="plan-section" id="sec2b">
+    <div class="section-head">
+      <span class="big-num">٢.١</span>
+      <div>
+        <span class="kicker">Competitive Benchmark</span>
+        <h2>تحليل المنافسين المباشرين والـ Benchmark</h2>
+      </div>
+    </div>
+
+    <!-- Competitor 1 -->
+    <div class="competitor">
+      <div class="competitor-head">
+        <h4>فريج صويلح <span style="font-family:'Cairo'; font-size:.8rem; color:rgba(247,239,224,0.6);">— المنافس المباشر والـ Benchmark في السوق</span></h4>
+        <div class="stat"><div class="n">185K</div><div class="l">متابع إنستغرام</div></div>
+        <a href="https://www.instagram.com/fireej_9wail7/?hl=ar" target="_blank" rel="noopener">البيدج ↗</a>
+      </div>
+      <div class="competitor-body">
+        <p>تُعتبر علامة "فريج صويلح" المقياس المرجعي (Benchmark) الأقوى في قطاع الأكل الكويتي التراثي من حيث الانتشار والارتباط بالهوية الوطنية.</p>
+
+        <h4 class="mini-title">1. إحصائيات البراند وقنوات التواجد الرقمي</h4>
+        <ul>
+          <li><strong>تهيئة الحساب (Profile Setup):</strong>
+            <ul>
+              <li>البايو يركز على استعراض مواقع الفروع بدلًا من كتابة وصف تسويقي دقيق للخدمة.</li>
+              <li>لا يتم إدراج روابط المنصات الرقمية الأخرى على إنستغرام.</li>
+              <li>امتلاك موقع إلكتروني خاص لاستقبال الطلبات مباشرة.</li>
+            </ul>
+          </li>
+          <li><strong>البرهان الاجتماعي (Highlights &amp; Social Proof):</strong>
+            <ul>
+              <li>ترتيب ممتاز للهايلايتس يتضمن وثائق لتعزيز ثقة العميل (مثل: مصادر اللحوم والدواجن الطازجة، وشهادة الآيزو للجودة).</li>
+              <li>تخصيص هايلايت لتغطيات الفروع ومحتوى الزوار (UGC)، مما يشجع الجمهور على التصوير والتعلق بالعلامة.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h4 class="mini-title">2. تحليل استراتيجية المحتوى وأسلوب العرض</h4>
+        <details class="idea">
+          <summary><span class="idx">أ</span> محتوى الـ UGC والتسويق بالمؤثرين
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <ul>
+              <li>الاعتماد المكثف على تجارب صناع المحتوى والبلوجرز لنقل تجربة الأكل الحقيقية داخل المكان.</li>
+              <li>التركيز البصري الذكي على زوايا الـ Food Porn القريبة التي يحبها الجمهور الكويتي: (استعراض العيش النثري والموزة الذايبة، تقليب الأرز بالتوابل، وإظهار صوصات المرق والدقوس) لخلق تجربة حية تشعر المتابع وكأنه يتذوق الأكل.</li>
+            </ul>
+            <div class="ref-links">
+              <a href="#" onclick="return false;">شاهد نموذج فيديو تقييم المؤثرين واستعراض الأكل ١</a>
+              <a href="#" onclick="return false;">شاهد نموذج فيديو تجربة الأكل واستعراض النطاعة ٢</a>
+            </div>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">ب</span> ربط البراند بالهوية الوطنية والتراث
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <p style="margin:0;">الحرص الدائم على إبراز اللمسات التراثية والأصالة الكويتية في الديكور وطريقة التقديم، وهو ما يخلق تعاطفًا وارتباطًا وجدانيًا عاليًا مع المتابع الكويتي.</p>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">ج</span> محتوى المسابقات والتفاعل المباشر (Gamification)
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <ul>
+              <li>الاعتماد على مسابقات تفاعلية قوية تهدف لزيادة التفاعل وجذب متابعين جدد، مع ربط جوائز المسابقة بدعوات مجانية لزيارة الفروع.</li>
+              <li>أسلوب المسابقات: استعراض فيديو لفرع من الخارج والمطالبة بتخمين الفرع، أو عرض طبق ومطالبة الجمهور بتخمين اسمه.</li>
+            </ul>
+            <div class="ref-links"><a href="#" onclick="return false;">شاهد نموذج فيديو مسابقات التخمين للجمهور</a></div>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">د</span> الترويج للخدمات الجانبية والمحتوى الترفيهي
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <ul>
+              <li>التسويق لخدمات التموين الخارجي وتغطية المناسبات والأعراس (مثل استعراض أطباق الحلو والرهش مع إبراز التفاصيل الفاخرة للخدمة).</li>
+              <li>استخدام دعابات خفيفة مقربة للشارع الكويتي مثل (منشن صديقك اللي يخرب الرجيم / كنسل الرجيم اليوم).</li>
+            </ul>
+          </div>
+        </details>
+
+        <h4 class="mini-title">3. خلاصة تحليل محتوى فريج صويلح</h4>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>نوع المحتوى</th><th>أسلوب التنفيذ لدى المنافس</th></tr></thead>
+            <tbody>
+              <tr><td>محتوى بناء العلامة (Branding)</td><td>قوي جدًا؛ ينجح في إبراز مميزات المكان، جودة الطعام، ورحابة الاستقبال.</td></tr>
+              <tr><td>المحتوى التفاعلي (Interactive)</td><td>ممتاز؛ يعتمد على المسابقات ذات الجوائز لرفع معدلات المتابعة والانتشار.</td></tr>
+              <tr><td>المحتوى الترفيهي (Entertainment)</td><td>متوازن؛ يخاطب الشارع الكويتي بعفوية ودون تكلف.</td></tr>
+              <tr><td>محتوى المبيعات (Sales)</td><td>جيد في استعراض الخدمات، لكنه يفتقد للعروض المباشرة والمحفزة على الطلب السريع.</td></tr>
+              <tr><td>جودة الإنتاج (Production Quality)</td><td>جودة الفيديوهات والصور تتميز بالعفوية والبساطة، مع التركيز على طبيعة الأكل بدون فلاتر مبالغ فيها، والاعتماد الأكبر على الـ Reels.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 class="mini-title">4. الفجوات والفرص المقترحة لصالح "جدر فخار" (Our Competitive Edge)</h4>
+        <p>بناءً على نقاط القوة والضعف لدى منافسنا الرئيسي، نستخرج الفجوات التشغيلية والتسويقية التي سينفذ منها مطعم جدر فخار:</p>
+        <ul>
+          <li><strong>إغلاق الدائرة البيعية بالعروض (Closing Offer):</strong> الفجوة لدى المنافس: يقدم محتوى مشهي مع مؤثرين لكنه يفتقد لربط الفيديو بعرض محفز أو رابط مباشر للطلب (Call to Action). فرصتنا: ربط كل فيديو مشهي بـ عرض خصم، أو توصيل مجاني عبر كيتا، أو بوكس جمعة بسعر خاص لإغلاق صفقة البيع فورًا.</li>
+          <li><strong>المسابقات التراثية والتعليمية المبتكرة:</strong> فرصتنا: تنفيذ مسابقات أعمق تربط المتابع بتاريخ الأكل الكويتي مثل: "من أول من ابتكر المجبوس؟" أو "كيف كان يُعد المجبوس قديمًا؟" وممكن نعلمه بصيغة سؤال أو بصيغة دعابة، مع اشتراط المتابعة والمنشن لزيادة انتشار الحساب.</li>
+          <li><strong>الاحترافية في جودة الإنتاج البصري:</strong> فرصتنا: تقديم محتوى أعلى جودة من حيث الإضاءة والهندسة الصوتية ASMR مع الحفاظ على العفوية، لتفوق الجودة البصرية لجدر فخار على عفوية المنافس.</li>
+          <li><strong>التسعير التنافسي للجمعات والديوانيات:</strong> فرصتنا: تقديم عروض "الديوانية" بقيمة أعلى مقابل السعر، ونركز على أن اللحم النعيمي المحلي، وتستهدف شريحة الشباب والديوانيات بسعر تنافسي.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Competitor 2 -->
+    <div class="competitor">
+      <div class="competitor-head">
+        <h4>مطعم الخروف <span style="font-family:'Cairo'; font-size:.8rem; color:rgba(247,239,224,0.6);">— المنافس المباشر الثاني</span></h4>
+        <div class="stat"><div class="n">103K</div><div class="l">متابع إنستغرام</div></div>
+        <a href="https://www.instagram.com/alkhrof/?hl=ar" target="_blank" rel="noopener">البيدج ↗</a>
+      </div>
+      <div class="competitor-body">
+        <p>يُعتبر مطعم "الخروف" منافسًا مباشرًا نشطًا في قطاع الكبسات البرية والأرز، ويمتلك حضورًا قويًا يستهدف فئة الشباب بشكل أساسي عبر المحتوى الكوميدي وتغطيات الفروع (الكويت والسعودية).</p>
+
+        <h4 class="mini-title">1. إحصائيات البراند وقنوات التواجد الرقمي</h4>
+        <ul>
+          <li><strong>تهيئة الحساب:</strong> البايو مُجهّز بذكاء؛ يحدد التخصص بوضوح (الكبسة البرية) مع ذكر الفروع. استخدام رابط موحّد (Linktree) يربط كافة منصات السوشيال ميديا (تيك توك، سناب شات، إنستغرام)، بالإضافة إلى أرقام التواصل ومواقع الفروع للكويت والسعودية لتسهيل الطلب.</li>
+          <li><strong>البرهان الاجتماعي والخدمات:</strong> هايلايتس منظمة تعكس خدمات البوفيه (الكويت والسعودية)، منيو الحلويات، ومصدر اللحوم الطازجة لبناء الثقة، مع قسم خاص للتغطيات الإعلامية واستقبال المشاهير.</li>
+          <li><strong>جودة الإنتاج ومعدل النشر:</strong> معدل نشر منتظم لكن بدون خطة بصرية منظمة (Grid) ثابتة. معدل التفاعل الأورجانيك (Organic Reach) مقبول، وجودة التصوير متوسطة وتعتمد على البساطة.</li>
+        </ul>
+
+        <h4 class="mini-title">2. تحليل استراتيجية المحتوى وأسلوب العرض</h4>
+        <details class="idea">
+          <summary><span class="idx">أ</span> المحتوى الترفيهي القائم على المواقف (Relatable Comedy)
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <ul>
+              <li>الاعتماد الشديد (بنسبة 70%) على المحتوى الكوميدي وصناع المحتوى؛ عبر تمثيل مواقف طريفة من الشارع الكويتي (مثل: هروب الموظف من المدير، أفعال الأخ الكبير والصغير) مع إقحام الأكل داخل السياق.</li>
+              <li>نقاط تحسين لدى المنافس: بعض التعليقات ترى أن الأسلوب الكوميدي قد يكون متكلفًا أحيانًا، كما أن تركيزهم على الكوميديا يطغى على إبراز جمال ونطاعة الوجبة نفسها.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">ب</span> الدمج السلس للإعلانات والوجبات داخل السكيتشات
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <p>ينجح المنافس في شرح الميزات التسويقية لوجباته (مثل: وجبة التوفير أو وجبة كأس العالم) من خلال مواقف طريفة تجعل المتابع يتقبل الإعلان دون ملل.</p>
+            <div class="ref-links"><a href="#" onclick="return false;">شاهد نموذج فيديو شرح وجبة التوفير بموقف طريف</a></div>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">ج</span> محتوى التفاعل والتصوير مع الزبائن (Gamification &amp; Street Contests)
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <p style="margin:0;">إطلاق سلسلة فيديوهات ميدانية بعنوان (كبسة أسئلة)؛ تقوم على مسابقات سريعة مع زبائن الصالة، وتوزيع خصومات فورية أو وجبات مجانية لمن يجيب صح، مما يرفع من حيوية المكان.</p>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">د</span> المحتوى البيعي واستعراض الطعام (Sales &amp; Food Visuals)
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <p style="margin:0;">يُعد زاوية ضعف لدى المنافس؛ معظم فيديوهات استعراض الطعام تفتقر إلى الكابشن الشارح، ولا تعكس مشاعر "النطاعة والخنين"، مما يقلل التفاعل معها مقارنة بالفيديوهات الترفيهية. يقتصر المحتوى البيعي القوي على تغطيات المؤثرين الكاملة (من لحظة دخول المطعم، التذوق، وحتى دفع الفاتورة).</p>
+            <div class="ref-links"><a href="#" onclick="return false;">فيديو استعراض الوجبة</a></div>
+          </div>
+        </details>
+
+        <h4 class="mini-title">3. تحليل التعليقات وسلوك الجمهور لدى المنافس (Audience Insights)</h4>
+        <p>تحليل تعليقات الزوار على حساب المنافس كشف عن 3 نقاط ذهبية في غاية الأهمية:</p>
+        <ul>
+          <li>الانبهار بالتصوير الاحترافي للأكل: الجمهور يتفاعل بشكل مضاعف مع المقاطع التي تُبرز التفاصيل البصرية الجذابة للوجبة بدقة عالية.</li>
+          <li>التشكيك في حجم الوجبة (الراهي): وجود اعتراضات من بعض العملاء بأن كمية الأرز واللحم المقدمة بالفرع أقل مما يظهر في الإعلانات، بينما يتساءل عملاء آخرون بفضول عن حقيقة الكمية المعروضة فعليًا.</li>
+          <li>التطلع للخدمات المجانية الجانبية: تكرار استفسار الزبائن عن وجود مقبلات أو شوربة مجانية تنزل على الطاولة قبل وصول الطلب الرئيسي.</li>
+        </ul>
+
+        <h4 class="mini-title">4. الفجوات والفرص المقترحة لصالح "جدر فخار"</h4>
+        <ul>
+          <li><strong>استغلال قيمة "الكرم والجود الكويتي" (فيديو الضيف والفلوس):</strong> تنفيذ فيديو يعكس شيمة الكرم الكويتي الأصيلة، واستعراض جودة اللحم النعيمي المحلي والعيش النثري وخنين الدقوس.</li>
+          <li><strong>التفوق في إبراز "الكمية الراهية" بصدق (Debunking Portions):</strong> صناعة محتوى مخصص يوضح حجم الوجبة الفردية والوجبة العائلية بشكل واقعي مع تقييمات حقيقية من الزوار داخل الصالة، لإنهاء التشكيك الذي يعاني منه المنافس وتأكيد ميزة "الراهي" لدينا.</li>
+          <li><strong>تطبيق الفعالية الميدانية "جدر الأسئلة" في الصالة:</strong> إعلان يوم تصوير مفتوح داخل مطعم جدر فخار بالفحيحيل (مثلًا يوم الجمعة) بقيادة مؤثر معروف، وتوزيع كوبونات خصم ووجبات مجانية على الزوار المشاركين مع اشتراط متابعة الحساب، مما يخلق ازدحامًا وتفاعلًا واسعًا.</li>
+          <li><strong>رفع جودة التصوير البصري (Food Porn Focus):</strong> التغلب على ضعف المنافس في تصوير الطعام بتوفير مقاطع احترافية تركز على النكهات والتفاصيل (البخار، صب الدقوس، سحب العظم) مرفقة بكابشن مشهي يوضح تفاصيل الوجبة.</li>
+          <li><strong>إبراز الضيافة والمقبلات:</strong> الترويج لشوربة الجدر أو المقبلات والدقوس التي تنزل مجانًا مع الوجبات لإشباع رغبة الزبائن المذكورة في التعليقات.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Competitor 3 -->
+    <div class="competitor">
+      <div class="competitor-head">
+        <h4>مطعم مو هندي <span style="font-family:'Cairo'; font-size:.8rem; color:rgba(247,239,224,0.6);">— المنافس غير المباشر</span></h4>
+        <div class="stat"><div class="n">10K</div><div class="l">متابع إنستغرام</div></div>
+        <a href="https://www.instagram.com/mo_mataam_hendi/?hl=ar" target="_blank" rel="noopener">البيدج ↗</a>
+      </div>
+      <div class="competitor-body">
+        <p>تُعد هذه الفئة من المنافسين غير المباشرين مصدرًا حيويًا لجذب شريحة الشباب من محبي تجارب الطعام الجريئة، حيث يعتمد المطعم بشكل كلي على التسويق القائم على شخصية المؤسس (Founder-Led Marketing) والتصوير العفوي لتقديم تجربة الأكل.</p>
+
+        <h4 class="mini-title">1. إحصائيات البراند وقنوات التواجد الرقمي</h4>
+        <ul>
+          <li><strong>تهيئة الحساب:</strong> البايو بسيط يحتوي على رابط الموقع وجملة تحفيزية فقط. لا يدرج الحساب أي روابط أخرى سوى حسابه الشخصي على تطبيق "سناب شات". عدم وجود تطبيق خاص بالمطعم أو موقع إلكتروني للطلبات المباشرة.</li>
+          <li><strong>البرهان الاجتماعي والخدمات:</strong> الهايلايتس تركز على التواجد في تطبيقات التوصيل (جاهز، كيتا، طلبات) وشهادات الجودة (مثل شهادة جودة مستر كليفرز ومصدر الدجاج). فجوة لدى المنافس: غياب تام لصور المنيو، الأطباق الرئيسية، أو مراجعات العملاء وتصوير الصالة داخل الهايلايتس.</li>
+          <li><strong>جودة الإنتاج ومعدل النشر:</strong> التفاعل ممتاز جدًا مقارنة بحجم الحساب الصغير. الاعتماد على النشر اليومي العفوي في "الستوريز" لنقل أجواء العمل، وتصوير الطعام بدون خطة بصرية (Grid) معقدة أو إخراج احترافي، بل بكاميرا الموبايل المباشرة.</li>
+        </ul>
+
+        <h4 class="mini-title">2. تحليل استراتيجية المحتوى وأسلوب العرض</h4>
+        <details class="idea">
+          <summary><span class="idx">أ</span> التسويق المباشر عبر شخصية المالك (Founder-Led Marketing)
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <ul>
+              <li>المحتوى قائم بالكامل على كاريزما صاحب المطعم؛ يظهر بوجه بشوش وقريب للقلب، يقدم الأكل بنفسه، يقف في المطبخ، ويتحدث عن رحلته، قصص نجاحه، والتحديات التي واجهها (Storytelling).</li>
+              <li>يمزج بين مشاهد أداء الخدمة والطهي وبين لقاءاته الإعلامية، مما يحول الفيديوهات إلى تجربة إلهام وجوع في نفس الوقت.</li>
+            </ul>
+            <div class="ref-links"><a href="#" onclick="return false;">شاهد فيديو قصة نجاح صاحب المطعم واستعراض الأكل</a></div>
+          </div>
+        </details>
+        <details class="idea">
+          <summary><span class="idx">ب</span> محتوى "التلذذ وتجربة الطعام" (Sensory Food Experience)
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="idea-body">
+            <p style="margin:0;">التركيز المباشر على لحظة "رفع الغطاء عن الطعام"، والمشاركة الحية في التذوق والتلذذ بالأكل أمام الكاميرا، وهو ما يثير شهية العميل فورًا ويجعله يتفاعل مع الفيديو بصورة أورجانيك عالية.</p>
+          </div>
+        </details>
+
+        <h4 class="mini-title">3. تحليل التعليقات ورأي الجمهور لدى المنافس</h4>
+        <ul>
+          <li>سوء التنظيم التشغيلي داخل المكان: تكرار شكاوى الزوار من تأخر الدور، طوابير الانتظار العشوائية، التمييز في المعاملة بين المعارف والزبائن العاديين، وإغلاق المطعم بشكل مفاجئ بعد انتظار طويل.</li>
+          <li>إغفال تسويق التوصيل (Ignored Delivery): عدم التركيز على التوصيل في المحتوى إطلاقًا، والتركيز فقط على التواجد الميداني.</li>
+          <li>مراعاة الخصوصية والثقافة المحلية: الحرص عند مشاركة العنصر النسائي في المحتوى على إخفاء الوجه أو احترام الخصوصية السائدة.</li>
+        </ul>
+
+        <h4 class="mini-title">4. الفجوات والفرص المقترحة لصالح "جدر فخار"</h4>
+        <ul>
+          <li><strong>إطلاق سلسلة فيديوهات "عيش التجربة" (Point of View - POV):</strong> الفكرة: محتوى يأخذ العميل في رحلة كاملة بدءًا من نزوله من السيارة أمام مطعم "جدر فخار" بالفحيحيل، الاستقبال، وصولًا للهوك البصري (فتح جدر المجبوس النعيمي وبخاره يتصاعد)، الطاقم البشوش، تقديم الضيافة والمقبلات، وتذوق العيش النثري واللحم الذايب حتى ختامه بالحمد والثناء.</li>
+          <li><strong>استغلال نقطة الضعف التشغيلية للمنافس (التنظيم وسرعة التوصيل):</strong> التركيز على سلاسة الخدمة والتنظيم داخل صالة جدر فخار، واستغلال إهمال المنافس للتوصيل بالترويج المكثف لخدمة "التوصيل السريع والمميز" لجميع مناطق الكويت عبر السائقين المباشرين وتطبيق كيتا.</li>
+          <li><strong>أنسنة البراند وإنشاء شخصية ممثلة للمطعم (Brand Personality):</strong> تعويض عدم وجود مالك يظهر بصورته، من خلال إبراز "شخصية الشيف" أو "مدير الصالة الكويتي الأصيل" الذي ينزل للزبائن ويسألهم عن رأيهم ويبث روح الكرم والترحيب.</li>
+          <li><strong>التفوق في تفاصيل إعداد الأرز واللحم:</strong> استغلال حقيقة أن الجمهور يتفاعل مع "تفاصيل طهي الأكل"؛ بتصوير حبات العيش النثري وهي تُقلّب بالزعفران، وطراوة اللحم النعيمي المحلي وهو يُفصل عن العظم، لإبراز النظافة والجودة العالية مقارنة بمطاعم الفاست فود.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:10px;">
+      <h4 class="mini-title" style="margin-top:0;">ملخص قسم تحليل المنافسين المكتمل</h4>
+      <p style="margin-bottom:10px;">بهذا نكون قد أتممنا دراسة تحليلية ثلاثية لأقوى المنافسين:</p>
+      <ul style="margin-bottom:0;">
+        <li><strong>فريج صويلح:</strong> (Benchmark الأقوى كويتيًا - استغللنا فجوة العروض ونوعية الإنتاج).</li>
+        <li><strong>الخروف:</strong> (منافس الكبسات والشباب - استغللنا فجوة إثبات "الكمية الراهية" والتصوير الاحترافي).</li>
+        <li><strong>مو هندي:</strong> (منافس غير مباشر قائم على المؤسس - استغللنا فجوة التوصيل والتنظيم وسلسلة التجربة الحية).</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="sadu"></div>
+
+  <!-- ================= SECTION 3: TARGET AUDIENCE ================= -->
+  <section class="plan-section alt" id="sec3">
+    <div class="section-head">
+      <span class="big-num">٣</span>
+      <div>
+        <span class="kicker">Target Audience &amp; Buyer Personas</span>
+        <h2>الجمهور المستهدف وشخصيات المشتري</h2>
+      </div>
+    </div>
+    <p class="lead">يتكون الجمهور المستهدف لمطعم جدر فخار من شريحتين رئيسيتين تختلفان في دوافع الشراء، نمط الاستهلاك، والقنوات الرقمية المستخدمة.</p>
+
+    <h3 class="sub-title">3.1 الشرائح الرئيسية للجمهور (Target Segments)</h3>
+    <div class="grid-2">
+      <div class="persona">
+        <div class="persona-head">
+          <h4>كبار العائلات وأصحاب الديوانيات</h4>
+          <div class="age">الجمعات والزّوارات · 30 – 55 سنة</div>
+        </div>
+        <div class="persona-body">
+          <dl>
+            <dt>الجنس</dt><dd>رجال وسيدات (الرجال لجمعات الديوانيات والشاليهات، والسيدات لزّوارات العائلات يوم الجمعة).</dd>
+            <dt>المكان</dt><dd>الفحيحيل، المنقف، العقيلة، الأحمدي، والمناطق المجاورة (مع التوصيل لكافة مناطق الكويت).</dd>
+            <dt>الحالة الاجتماعية</dt><dd>متزوجون ولديهم عائلات ومجموعات ممتدة.</dd>
+            <dt>الوظيفة</dt><dd>موظفو القطاع الحكومي، شركات النفط، أو أصحاب الأعمال والأنشطة الخاصة.</dd>
+            <dt>الأهداف التسويقية</dt><dd>تقديم وجبة "تبّيض الوجه" أمام الضيوف تجمع بين الكرم والوفرة (راهي) والنكهة التراثية الأصيلة (خنين وناطع)، وتوفير عناء الطبخ والتجهيز المنزلي.</dd>
+            <dt>التخوفات والتحديات</dt><dd>خوف من وصول الأكل باردًا، أن تكون الكمية شحيحة لا تكفي الحضور، أو أن تكون جودة اللحم غير مضمونة وتسبب إحراجًا أمام الضيوف.</dd>
+            <dt>محفزات الشراء</dt><dd>ضمان استخدام لحم نعيمي محلي 100% ودجاج طازج يوميًا، التقديم في صوانٍ مرتبة وراهية، والتغليف الحراري الممتاز الذي يحفظ السخونة.</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="persona">
+        <div class="persona-head">
+          <h4>الشباب وموظفو المنطقة والشركات</h4>
+          <div class="age">الطلبات الفردية والسريعة · 20 – 35 سنة</div>
+        </div>
+        <div class="persona-body">
+          <dl>
+            <dt>الجنس</dt><dd>ذكور وإناث.</dd>
+            <dt>المكان</dt><dd>الفحيحيل، الشركات، والمجمعات القريبة (مع اعتماد كبير على التوصيل الخاص وتطبيق كيتا).</dd>
+            <dt>الحالة الاجتماعية</dt><dd>أعزب / متزوج جديدًا.</dd>
+            <dt>الوظيفة</dt><dd>موظفو القطاعين العام والخاص، طلاب الجامعة، والمهنيون.</dd>
+            <dt>الأهداف التسويقية</dt><dd>الحصول على وجبة غداء أو عشاء دسمة، ناطعة، ومشبعة تعطيهم طاقة، مع تحقيق أعلى قيمة مقابل السعر.</dd>
+            <dt>التحديات والتخوفات</dt><dd>الحيرة اليومية في اختيار الوجبة، التأخر في التوصيل، أو الحصول على وجبات أرز بجودة ضعيفة (عيش معجن أو دجاج غير طازج).</dd>
+            <dt>محفزات الشراء</dt><dd>سهولة الطلب بنقرة واحدة عبر تطبيق كيتا، السرعة في التوصيل، ووجود وجبات فردية مشبعة وراهية.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">3.2 السلوك الثقافي والخصائص النفسية للجمهور (Psychographics)</h3>
+    <ul>
+      <li><strong>الارتباط التراثي والوطني:</strong> جمهور يمتلك اعتزازًا عاليًا بالهوية الوطنية والتراث الكويتي؛ أي توظيف تسويقي يرتبط بالرموز والأهازيج والمناسبات الوطنية يحقق تفاعلًا مضاعفًا.</li>
+      <li><strong>حب التوثيق ومشاركة الطعام (Foodies &amp; Visual Culture):</strong> ميل عالٍ لتصوير الطعام ومشاركته على شبكات التواصل، والتفاعل المباشر مع مقاطع الـ Food Porn والـ ASMR التي تعكس صوت ونطاعة الأكل القريب.</li>
+    </ul>
+
+    <h3 class="sub-title">3.3 القنوات التسويقية المخصصة حسب الشريحة</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>المنصة الرقمية</th><th>الشريحة المستهدفة</th><th>نوع المحتوى والهدف</th></tr></thead>
+        <tbody>
+          <tr><td>إنستغرام (Instagram)</td><td>العائلات وأصحاب الديوانيات</td><td>عرض الصواني الراهية، الحشو، واللحم الذايب عبر مقاطع Reels وتصاميم المنيو والهايلايتس المنظمة لتشجيع طلبات الجمعات.</td></tr>
+          <tr><td>تيك توك (TikTok)</td><td>فئة الشباب والموظفين</td><td>فيديوهات تجارب الأكل السريعة، مقاطع ASMR، كواليس المطبخ، والسكيتشات الترفيهية لتشجيع الطلب الفردي.</td></tr>
+          <tr><td>سناب شات (Snapchat)</td><td>النطاق الجغرافي القريب (الفحيحيل والمنطقة الجنوبية)</td><td>إعلانات التجميع المباشر المعتمدة على الموقع الجغرافي (Geo-fencing) لجذب زوار الصالة وطلبات التوصيل المباشر وتطبيق كيتا.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">3.4 ميزان استغلال فجوات المنافسين وتطلعات العميل (Insight to Action)</h3>
+    <p>بناءً على الشكاوى والأسئلة الحقيقية للجمهور لدى المنافسين، هذه هي الحلول والرسائل المباشرة التي سنتفوق بها في جدر فخار:</p>
+    <ul class="strategy-list">
+      <li><strong>[مشكلة: الخوف من مسببات الحساسية مثل إضافة الحليب للعيش]</strong> ← الاستجابة: الشفافية المطلقة؛ صناعة محتوى يوضح مكونات الأرز بكل دقة، والإشارة صراحة إلى أن العيش مطبوخ خالٍ من أي إضافات مخفية.</li>
+      <li><strong>[مشكلة: التساؤل المستمر عن مصدر اللحوم والدواجن]</strong> ← الاستجابة: تثبيت هايلايت خاص على إنستغرام باسم "مصادرنا" يتضمن فواتير وشهادات توريد اللحم النعيمي المحلي والدجاج الطازج يوميًا، وإظهارها دوريًا في المحتوى.</li>
+      <li><strong>[مشكلة: الشكوى من زفارة الدجاج أو العيش "الماي" المعجن]</strong> ← الاستجابة: التركيز في المحتوى على طريقة غسيل وتتبيل الدجاج الفريش بالبهارات الخنينة لضمان انعدام الزفارة، واستعراض حبات العيش النثري المستوية تمامًا وبدون تعجين.</li>
+      <li><strong>[مشكلة: سوء التغليف وتلف الطلب أثناء التوصيل]</strong> ← الاستجابة: اعتماد نظام تغليف محكم (Sealed Containers) يمنع انسكاب السائل، وتأهيل السائقين بنظام نقل آمن، مع صياغة وعد تسويقي صريح: "يوصلك دايركت، حار، ومترتب يفتح النفس".</li>
+      <li><strong>[مشكلة: إهمال المنافسين للرد على التعليقات والشكاوى]</strong> ← الاستجابة: تفعيل خدمة عملاء سريعة وودودة على مدار الساعة في الحساب والرد على كافة الاستفسارات والشكاوى بلغة عفوية، لبناء ولاء مستدام يتفوق على المنافسين.</li>
+      <li><strong>[مشكلة: محدودية توفر بعض الوجبات مثل وجبات الفطور أو أصناف معينة]</strong> ← الاستجابة: الترويج لتوفر كافة الأطباق الرئيسية والعيوش على مدار ساعات العمل دون انقطاع لتلبية الطلبات المفاجئة.</li>
+    </ul>
+  </section>
+
+  <div class="sadu thin"></div>
+
+  <!-- ================= SECTION 4: BRAND IDENTITY ================= -->
+  <section class="plan-section" id="sec4">
+    <div class="section-head">
+      <span class="big-num">٤</span>
+      <div>
+        <span class="kicker">Brand Identity &amp; Positioning</span>
+        <h2>التموضع الذهني وعرض القيمة وهوية البراند</h2>
+      </div>
+    </div>
+    <p class="lead">يركز هذا القسم على كيفية بناء الصورة الذهنية لمطعم "جدر فخار" في عقل العميل الكويتي، وتحديد الوعود الرئيسية ونبرة الصوت التي تميزنا عن المنافسين.</p>
+
+    <h3 class="sub-title">4.1 بيان التموضع الذهني (Brand Positioning Statement)</h3>
+    <div class="quote-block">"مطعم جدر فخار هو الوجهة الأولى للأكل الكويتي والخليجي التراثي للجمعات والأفراد في الكويت، حيث يقدم أطباقًا راهية ولذيذة معتمدًا حصريًا على لحم نعيمي محلي 100% ودجاج طازج يوميًا، ويضمن وصول الطلب ساخنًا وخنين بتغليف عالي الجودة وبخدمة تعكس كرم الضيافة الكويتية الأصيلة."</div>
+    <p><strong>الفكرة الجوهرية (Core Concept):</strong> إلغاء المعادلة الصعبة بين "الجودة البيتوتية المضمونة" و"سرعة وسخونة التوصيل"، مع التأكيد على مفهوم الكرم والوفرة الراهية.</p>
+
+    <h3 class="sub-title">4.2 عرض القيمة الرئيسي (Core Value Proposition)</h3>
+    <div class="equation">
+      <span class="term">الجودة المطلقة</span><span class="op">+</span>
+      <span class="term">الوفرة والكَرم</span><span class="op">+</span>
+      <span class="term">السخونة والسرعة</span><span class="op">=</span>
+      <span class="term" style="background:var(--gold); color:var(--night-deep); border-color:var(--gold);">تجربة تبّيض الوجه</span>
+    </div>
+    <p>عرض القيمة: "أكل كويتي وخليجي أصيل بلحم نعيمي محلي ودجاج طازج يوميًا، في صوانٍ راهية توصلك دافية وخنينة لحد بابك، وبخدمة تبّيض الوجه وتخليك تعيد التجربة."</p>
+    <ul>
+      <li><strong>ضمان الخامات 100%:</strong> لا نستخدم أي لحوم أو دواجن مجمدة؛ الاعتماد كليًا على النعيمي المحلي والدجاج الفريش اليومي.</li>
+      <li><strong>الكرم والكمية الراهية:</strong> الوجبات والصواني صُممت لتكون مشبعة ووفيرة تناسب قدر الضيافة والتجمعات.</li>
+      <li><strong>عزل وسخونة التوصيل:</strong> تغليف حراري ومُحكم يمنع انسكاب السوائل ويضمن وصول المجبوس والمضغوط بنفس حرارة خروجه من المطبخ.</li>
+    </ul>
+
+    <h3 class="sub-title">4.3 أبعاد نبرة الصوت (Brand Voice Dimensions)</h3>
+    <p>نعتمد الشخصية التسويقية لـ "الرجل الكويتي الأصيل.. الكريم، الصادق، وصاحب الروح الخفيفة والدواوين". وتتحدد نبرتنا عبر الأبعاد الأربعة التالية:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>البُعد التسويقي</th><th>النسبة</th><th>المفهوم والتطبيق الميداني</th></tr></thead>
+        <tbody>
+          <tr><td>عفوي وممتع</td><td>80%</td><td>الحديث بأسلوب دافئ مثل أحاديث الديوانية، والابتعاد التام عن الأسلوب الإعلاني الجاف والتقريري.</td></tr>
+          <tr><td>حماسي ومرح</td><td>70%</td><td>إبراز الشغف الشديد بالنكهات والـ "نطاعة"، مع استخدام تعبيرات تثير الشهية والحماس للطلب المباشر.</td></tr>
+          <tr><td>ودي وقريب</td><td>90%</td><td>مخاطبة العميل كأنه ضيف عزيز داخل ديوانيتك، والتعبير عن روح الترحيب والكرم في كل رد وتفاعل.</td></tr>
+          <tr><td>صريح ومباشر</td><td>100%</td><td>الصدق المطلق؛ عندما نعد بلحم نعيمي فريش ووجبة راهية، نثبت ذلك بصريًا وبشكل واقعي بدون مبالغة.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">4.4 قاموس المصطلحات المعتمدة للبراند (Brand Lexicon)</h3>
+    <p>تُستخدم هذه المفردات التراثية والمحلية بانتظام في منشورات السوشيال ميديا، الإعلانات، والكابشن لتشكيل بصمة صوتية فريدة لمطعم "جدر فخار":</p>
+    <h4 class="mini-title">وصف المذاق والجودة</h4>
+    <div class="lexicon">
+      <span>خنين</span><span>ناطع</span><span>ذايب</span><span>فريش</span><span>يثلج الصدر</span><span>يبّيض الوجه</span><span>عيش نثري</span>
+    </div>
+    <h4 class="mini-title">وصف الوفرة والجمعات</h4>
+    <div class="lexicon">
+      <span>راهي</span><span>صينية الجمعة</span><span>شغل ديوانية</span><span>العزيمة</span><span>قدر الكرم</span>
+    </div>
+    <h4 class="mini-title">التفاعل والدعوة للطلب</h4>
+    <div class="lexicon">
+      <span>زاهبين؟</span><span>يطوفك</span><span>دايركت لي بابك</span><span>عوافي على قلبك</span>
+    </div>
+
+    <h3 class="sub-title">4.5 دستور التعامل ونبرة الردود (Do's &amp; Don'ts)</h3>
+    <div class="dos-donts">
+      <div class="col do">
+        <h4 style="color:#3a5c37;">✓ الأسلوب المعتمد في جدر فخار</h4>
+        <div class="item">الترويج للوجبة: "زاهبين لغداكم اليوم؟ مجبوس النعيمي الراهي يناديكم، خنين يوصلكم لي باب البيت."</div>
+        <div class="item">إبراز الوفرة: "إذا الحال مو مكتمل، ما نكون جدر فخار! شغل راهي يبّيض الوجه أمام ضيوفك."</div>
+        <div class="item">الرد على الاستفسار: "حياك الله يا هلا! اللحم النعيمي 100% طازج يوميًا، يوصلك حار وخنين."</div>
+      </div>
+      <div class="col dont">
+        <h4 style="color:var(--maroon);">✕ الأسلوب الممنوع</h4>
+        <div class="item">"يقدم مطعمنا أطباق الأرز بأفضل الأسعار المتاحة."</div>
+        <div class="item">"تتميز وجباتنا بحجمها الكبير وتغليفها الممتاز."</div>
+        <div class="item">"نعم عزيزي العميل، نحن نستخدم لحوم طازجة يوميًا بجميع الفروع."</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sadu"></div>
+
+  <!-- ================= SECTION 5: OBJECTIVES & KPIS ================= -->
+  <section class="plan-section alt" id="sec5">
+    <div class="section-head">
+      <span class="big-num">٥</span>
+      <div>
+        <span class="kicker">Marketing Objectives &amp; KPIs</span>
+        <h2>الأهداف التسويقية ومؤشرات قياس الأداء</h2>
+      </div>
+    </div>
+    <p class="lead">تتكامل الأهداف التسويقية لمطعم "جدر فخار" مع الأهداف التجارية للبيزنس لضمان تحقيق أعلى عائد على الاستثمار التسويقي (ROAS)، وتم تقسيمها إلى 3 محاور رئيسية.</p>
+
+    <h3 class="sub-title">5.1 الهدف الأول: زيادة المبيعات والطلبات المباشرة (Sales &amp; Direct Conversions)</h3>
+    <p><strong>هدف البيزنس:</strong> رفع صافي الإيرادات والمبيعات الشهرية من خلال تنشيط الطلبات المباشرة وزيادة الإقبال على الصالة.</p>
+    <ul>
+      <li>تحقيق 450 رسالة/طلب مباشر شهريًا عبر منصات التواصل وتطبيق كيتا.</li>
+      <li>زيادة عدد الزيارات الميدانية لصالة المطعم بالفحيحيل بنسبة 25% شهريًا.</li>
+      <li>رفع معدل طلبات التوصيل (Delivery Orders) عبر السائقين الخاصين وتطبيقات التوصيل.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ميتريكس القياس (Metrics)</th><th>مؤشرات الأداء الرئيسية (KPIs)</th></tr></thead>
+        <tbody>
+          <tr><td>إجمالي عدد الرسائل والطلبات (Message Count)</td><td>تكلفة الرسالة/الطلب (Cost Per Message / Order)</td></tr>
+          <tr><td>إجمالي التفاعلات الشرائية (Inquiries)</td><td>متوسط سعر النقرة (Cost Per Click - CPC)</td></tr>
+          <tr><td>عدد زيارات الصالة الموثقة (Foot Traffic)</td><td>معدل النقرات الإجمالي (Click Volume)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">5.2 الهدف الثاني: بناء الوعي والانتشار الواسع (Brand Awareness &amp; Reach)</h3>
+    <p><strong>هدف البيزنس:</strong> ترسيخ اسم "جدر فخار" كوجهة أساسية للأكل الكويتي التراثي في الفحيحيل والمناطق المجاورة.</p>
+    <ul><li>الوصول إلى 1 مليون مشاهدة فريدة (Unique Reach) عبر جميع المنصات (إنستغرام، تيك توك) خلال 3 أشهر.</li></ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ميتريكس القياس (Metrics)</th><th>مؤشرات الأداء الرئيسية (KPIs)</th></tr></thead>
+        <tbody>
+          <tr><td>معدل وصول الفيديوهات (Video Views)</td><td>تكلفة الألف مشاهدة (Cost Per Mille - CPM)</td></tr>
+          <tr><td>إجمالي الوصول الفريد (Unique Reach)</td><td>تكلفة مشاهدة الفيديو (Cost Per View - CPV)</td></tr>
+          <tr><td>معدل انطباعات المنشورات (Impressions)</td><td>متوسط المشاهدات للمقطع الواحد (Average Views Per Reel)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">5.3 الهدف الثالث: بناء الثقة والمصداقية (Brand Trust &amp; Engagement)</h3>
+    <p><strong>هدف البيزنس:</strong> تحويل المتابعين والزبائن الجدد إلى عملاء دائمين ودعاة للبراند (Brand Advocates) يعتمدون على المطعم في جمعاتهم.</p>
+    <ul><li>زيادة معدل التفاعل الإجمالي على الحسابات بنسبة 70% خلال 3 أشهر.</li></ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ميتريكس القياس (Metrics)</th><th>مؤشرات الأداء الرئيسية (KPIs)</th></tr></thead>
+        <tbody>
+          <tr><td>إجمالي التفاعلات (الإعجابات، التعليقات، المشاركات، الحفظ)</td><td>تكلفة التفاعل الواحد (Cost Per Engagement - CPE)</td></tr>
+          <tr><td>عدد الكليكات والروابط المستعلم عنها (Link Clicks)</td><td>عدد المتفاعلين لكل منشور (Engagement Per Post)</td></tr>
+          <tr><td>نسبة مشاركة المحتوى (Shares &amp; Saves)</td><td>معدل النقر إلى الظهور (Click-Through Rate - CTR)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="sadu thin"></div>
+
+  <!-- ================= SECTION 6: 4Ps ================= -->
+  <section class="plan-section" id="sec6">
+    <div class="section-head">
+      <span class="big-num">٦</span>
+      <div>
+        <span class="kicker">The 4 Ps Marketing Mix</span>
+        <h2>استراتيجية المزيج التسويقي</h2>
+      </div>
+    </div>
+
+    <h3 class="sub-title">6.1 المنتج (Product) — ترتيب الأطباق ونموذج "المنتج الهيرو"</h3>
+    <p>تعتمد استراتيجية المنيو على إبراز الطبق الأكثر تميزًا وجذبًا للعملاء (Hero Product)، مع دعم بقية الأطباق الأكثر طلبًا:</p>
+    <div class="grid-2" style="margin-bottom:22px;">
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">1. طبق البرية نعيمي — طبق الصدارة</h4><p style="margin:0;">الطبق الأول والأكثر طلبًا في المطعم؛ يُشكل الميزة التنافسية الأقوى لجدر فخار، ويعتمد على لحم النعيمي المحلي 100% المطهو بالأسلوب البري الأصيل. يُركز عليه بنسبة كبيرة من المحتوى الإعلاني والبيعي.</p></div>
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">2. مضغوط الدجاج</h4><p style="margin:0;">الطبق الثاني الأكثر إقبالًا لطعمه الغني.</p></div>
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">3. مجبوس الدجاج — الطبق التراثي الكلاسيكي</h4><p style="margin:0;">خيار أساسي للجمعات والعائلات بفضل الحشو الخنين والنكهة الكويتية الأصيلة.</p></div>
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">4. برية الدجاج — التنوع والوفرة</h4><p style="margin:0;">خيار ممتاز يجمع بين نكهة البرية والبديل الاقتصادي للدواجن الطازجة.</p></div>
+    </div>
+    <h4 class="mini-title">ملاحظات الجودة والتغليف (Quality &amp; Packaging)</h4>
+    <ul>
+      <li>التزام كامل بشرط "دجاج فريش يوميًا + لحم نعيمي محلي".</li>
+      <li>الاعتماد على التغليف الحراري المُحكم لمنع انسكاب المرق والدقوس لضمان التغلب على شكاوى التوصيل لدى المنافسين.</li>
+    </ul>
+
+    <h3 class="sub-title">6.2 السعر (Price) — التسعير القائم على القيمة (Value-Based Pricing)</h3>
+    <ul>
+      <li>اعتماد سياسة تسعير تعكس جودة الخامات المرتفعة (لحم نعيمي محلي ودجاج طازج) دون مبالغة.</li>
+      <li>تقديم "عروض الجمعات والديوانيات" بتسعير مجمّع يوفر قيمة عالية مقابل السعر لزيادة متوسط حجم الفاتورة (Average Order Value).</li>
+      <li>تقديم "وجبات فردية مشبعة" لشريحة الموظفين والشباب لتسهيل اتخاذ قرار الطلب اليومي عبر تطبيق كيتا والدليفري.</li>
+    </ul>
+
+    <h3 class="sub-title">6.3 المكان والتوزيع (Place) — جدول التشغيل وساعات الذروة</h3>
+    <p>تُدار عمليات التوصيل والصالة بناءً على ساعات الذروة الميدانية لضمان أعلى كفاءة تشغيلية. <strong>ساعات العمل الرسمية:</strong> يوميًا من 12:00 ظهرًا حتى 3:00 فجرًا.</p>
+    <div class="peak-row">
+      <div class="time">12:00 ظهرًا – 3:00 عصرًا</div>
+      <div class="bar"><strong>ذروة الغداء</strong> — ضغط توصيل مكثف (شركات ومنازل)</div>
+    </div>
+    <div class="peak-row rest">
+      <div class="time">3:30 عصرًا – 7:30 مساءً</div>
+      <div class="bar"><strong>الاستراحة والهدوء</strong> — تجهيز وإعداد تحضيري</div>
+    </div>
+    <div class="peak-row">
+      <div class="time">8:00 مساءً – 12:00 منتصف الليل</div>
+      <div class="bar"><strong>ذروة العشاء</strong> — ضغط صالة وتوصيل ديوانيات</div>
+    </div>
+
+    <h3 class="sub-title">6.4 الترويج (Promotion) — المزيج الترويجي والتوجيه الميداني</h3>
+    <ul>
+      <li><strong>الحملات الرقمية:</strong> ربط ميزانية الإعلانات المدفوعة بساعات الذروة المحددة (قبل الغداء وقبل العشاء بساعتين) — نبقى مركزين أن الإعلانات تشتغل في الوقت ده.</li>
+      <li><strong>التسويق التجريبي والميداني:</strong> استغلال تجهيز الصالة لاستقبال الزوار في ذروة العشاء، وتفعيل فعاليات التصوير والمسابقات الفورية.</li>
+      <li><strong>التواجد على تطبيق كيتا:</strong> تحسين المظهر الرقمي للمنيو على منصة كيتا بوضع "برية النعيمي" و"مضغوط الدجاج" في أعلى القائمة الموصى بها (Recommended Items).</li>
+    </ul>
+  </section>
+
+  <div class="sadu"></div>
+
+  <!-- ================= SECTION 7: CONTENT & CAMPAIGN PLAN ================= -->
+  <section class="plan-section" id="sec7">
+    <div class="section-head">
+      <span class="big-num">٧</span>
+      <div>
+        <span class="kicker">Content &amp; Campaign Strategy</span>
+        <h2>خطة المحتوى والحملات الإعلانية</h2>
+      </div>
+    </div>
+
+    <h3 class="sub-title">استراتيجية المنصات الرقمية وتوزيع الأهداف (Platform Strategy)</h3>
+    <p>تعتمد خطة التواجد الرقمي لمطعم جدر فخار على توزيع الأهداف التسويقية بناءً على طبيعة كل منصة وسلوك مستخدميها في السوق الكويتي: <strong>التركيز الأساسي والأول:</strong> منصة إنستغرام. <strong>التركيز الثاني الداعم:</strong> منصة تيك توك. <strong>المرحلة التوسعية اللاحقة:</strong> منصة سناب شات.</p>
+
+    <div class="platform ig">
+      <div class="platform-head">📸 7.1 المنصة الأولى والأساسية: إنستغرام (Instagram)</div>
+      <div class="platform-body">
+        <h4 class="mini-title" style="margin-top:0;">الأهداف المحددة للمنصة</h4>
+        <ul>
+          <li>عرض المنتجات والأطباق، إبراز مميزات وجودة الأكل، وتصوير تجربة الطعام وزيارة المطعم عمومًا.</li>
+          <li>ربط الجمهور بالبراند عاطفيًا وترسيخ التموضع الذهني للمطعم في أذهانهم.</li>
+          <li>البيع والمبيعات بصورة أساسية (زيادة زيارات وحجوزات الصالة + زيادة طلبات التوصيل والدليفري).</li>
+          <li>بناء وعي واسع وكبير بالعلامة التجارية للمطعم.</li>
+        </ul>
+        <h4 class="mini-title">الأسباب</h4>
+        <ul>
+          <li><strong>سلوك العميل الكويتي:</strong> إنستغرام هو "الكتالوج المعتمد" وواجهة الاختيار الأولى للعائلات وأصحاب الديوانيات في الكويت قبل اتخاذ قرار المطعم.</li>
+          <li><strong>تنوّع أدوات البيع والوعي:</strong> يتيح إنستغرام الجمع بين الوعي والبيع المباشر عبر مقاطع Reels (للوصول والوعي وتصوير النطاعة)، والـ Grid (لاستعراض المنيو والبوكسات بشكل احترافي)، والـ Stories (للبيع اليومي المباشر، نشر العروض، وتسهيل الطلب عبر الروابط المباشرة).</li>
+          <li><strong>القدرة على البناء العاطفي:</strong> خوارزميات إنستغرام ممتازة في الاستهداف الجغرافي ودفع المحتوى عالي الجودة للجمهور المحلي، مما يبني رابطًا عاطفيًا مستدامًا.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="platform tt">
+      <div class="platform-head">🎵 7.2 المنصة الثانية الداعمة: تيك توك (TikTok)</div>
+      <div class="platform-body">
+        <h4 class="mini-title" style="margin-top:0;">الأهداف المحددة للمنصة</h4>
+        <ul>
+          <li>تقديم المحتوى الترفيهي ومحتوى عرض وتجربة الطعام.</li>
+          <li>التركيز بدرجة أقل على المنشورات والريلز البيعية المباشرة.</li>
+          <li>زيادة التفاعل مع الجمهور وبناء الثقة في البراند والمطعم.</li>
+          <li>تنويع المحتوى وإظهار قوة وحجم المكان والكواليس.</li>
+        </ul>
+        <h4 class="mini-title">ما الذي يجب أن نحققه أيضًا من تيك توك</h4>
+        <ul>
+          <li><strong>الوصول الانفجاري المباشر (Viral Reach):</strong> استغلال خوارزميات تيك توك للوصول لشريحة الشباب والموظفين بخلفية صوتية تريند وأهازيج كويتية.</li>
+          <li><strong>تحويل الترافيك لإنستغرام وتطبيق كيتا:</strong> وضع رابط الطلب المباشر ورابط حساب إنستغرام في بايو التيك توك لتحويل الحماس والتفاعل إلى طلبات حقيقية دون إسكات الفيديو بالمحتوى البيعي المباشر.</li>
+          <li><strong>صناعة محتوى بأسلوب العميل (UGC):</strong> تشجيع الزوار وصناع المحتوى على تصوير تجاربهم في المطعم ونشرها مع هاشتاق المطعم.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="platform sc">
+      <div class="platform-head">👻 7.3 المنصة الثالثة (مرحلة لاحقة): سناب شات (Snapchat)</div>
+      <div class="platform-body">
+        <p style="margin:0;">تعتمد استراتيجية المحتوى على إبراز نقاط القوة الثلاث الكبرى لمطعم جدر فخار:</p>
+        <ul style="margin-top:12px; margin-bottom:0;">
+          <li><strong>جودة الطعام الفائقة:</strong> (لحم نعيمي محلي 100%، دجاج طازج فريش يوميًا، روبيان، عيش نثري، ودقوس خنين).</li>
+          <li><strong>تجربة الصالة وحسن الاستقبال:</strong> (الموقع في الفحيحيل، الديكور، المقابلة الراقية من الطاقم، والرقي في التقديم).</li>
+          <li><strong>التفوق التشغيلي في الدليفري (The Delivery Gap):</strong> التركيز المكثف على سرعة التوصيل وسخونة الطعام ونظافة التغليف، لاستغلال الفجوة الكبيرة لدى المطاعم المنافسة في التوصيل.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub-title">8.1 ركائز المحتوى الرئيسية (Content Pillars Matrix)</h3>
+    <div class="grid-3">
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">جودة الطعام الفائقة</h4><p style="margin:0;">لحم نعيمي محلي 100%، دجاج طازج فريش يوميًا، روبيان، عيش نثري، ودقوس خنين.</p></div>
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">تجربة الصالة وحسن الاستقبال</h4><p style="margin:0;">الموقع في الفحيحيل، الديكور، المقابلة الراقية من الطاقم، والرقي في التقديم.</p></div>
+      <div class="card"><h4 class="mini-title" style="margin-top:0;">التفوق التشغيلي في الدليفري</h4><p style="margin:0;">سرعة التوصيل وسخونة الطعام ونظافة التغليف، لاستغلال فجوة المنافسين في التوصيل.</p></div>
+    </div>
+
+    <h3 class="sub-title">8.2 الأكشن بلان والتنفيذ التفصيلي لأفكار المحتوى</h3>
+
+    <details class="idea" open>
+      <summary><span class="idx">١</span> المحتوى الوطني والثقافي (قصة أصل المجبوس والقصص التراثية)
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: بناء تعاطف ورابط عاطفي وتفاعل واسع مع الجمهور الكويتي مع الترويج لجودة المنتجات.</div>
+        <h4 class="mini-title" style="margin-top:0;">الأسلوب والتنفيذ</h4>
+        <ul>
+          <li>فيديو "ريل" قصير يبدأ بهوك بصري صريح يظهر لذاذة الأكل وفتحة الجدر، مع تعليق صوتي (Voice Over) يروي قصة تاريخية مشوقة عن أصل الأكلة.</li>
+          <li>أثناء سرد القصة، يتم عرض مشاهد حية للعميل وهو يأكل ويتلذذ، ويتخلل الحديث جمل عفوية تبرز جودة الأكل مثل "الله الله على هذا الدقوس.. مرة متاز!".</li>
+          <li>الختام (CTA): دعوة لتجربة الدقوس والأكل، مع لقطة للصحن وهو فارغ تمامًا والقول: "أحتاج طبقًا آخر.. انتظروا بقية القصة!".</li>
+        </ul>
+        <p style="margin:0;"><strong>التقييم التسويقي:</strong> ممتاز جدًا؛ يمزج بين التسلية (Entertainment)، الهوية الوطنية، ومحتوى الشراهة (Food Porn) مما يضمن انتشارًا فيروسيًا (Viral).</p>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٢</span> محتوى الوعي والمعايشة ("يوم في جدر" — Experience POV)
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: خلق وعي بالمكان، الديكور، حسن الاستقبال، وتجربة الطعام الصريحة داخل الصالة.</div>
+        <h4 class="mini-title" style="margin-top:0;">الأسلوب والتنفيذ</h4>
+        <ul>
+          <li>الهوك: الكشف عن طبق "برية النعيمي" أو المجبوس وبخاره يتصاعد بكثافة مع صوت إعجاب صادق من الزبون.</li>
+          <li>سلسلة المشاهد: تصوير العميل وهو يصل بالسيارة لمقر المطعم بالفحيحيل، الاستقبال الدافئ من الطاقم، الجلوس والممازحة مع الويتر أثناء الطلب.</li>
+          <li>إبراز الجودة: التركيز على المرق البيتي والمقبلات المجانية، لحظة فتح جدر النعيمي، وتذوق الأكل.</li>
+          <li>الختام: العميل يحاسب ويقول: "الحمد لله شبعنا! إذا ما جربتوا مطعم جدر فخار، أنصحكم تجربونه".</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٣</span> إبراز قوة التوصيل وسلسلة ("يوميات الدليفري / قوة الدليفري")
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: الضرب على نقطة ضعف المنافسين وتغطية فجوة التوصيل في السوق بتقديم وعد بالسرعة والسخونة.</div>
+        <h4 class="mini-title" style="margin-top:0;">الأسلوب والتنفيذ</h4>
+        <ul>
+          <li>تصوير عملية الاتصال وتلقي الطلب، إظهار عداد مؤقت (Timer) على الشاشة يحسب الوقت من المطبخ للتغليف وصولًا لسائق الدليفري وهو يسلم الأوردر للعميل أمام بيته.</li>
+          <li>إظهار فتح العلبة والمحفظ الحراري، وبخار الطعام يتصاعد كأنه خرج للتو من المطبخ، مع عبارة السائق: "تجربة هنية وبالهنا والشفا، طازة من نار!".</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٤</span> محتوى الجودة ونظافة المطبخ ("رحلة إلى مطبخ جدر")
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: بناء الشفافية وإثبات جودة اللحم النعيمي والدجاج الطازج.</div>
+        <h4 class="mini-title" style="margin-top:0;">الأسلوب والتنفيذ</h4>
+        <ul>
+          <li>تصوير عمليات التجهيز اليومية وإبراز الخامات: "نستخدم لحم نعيمي محلي كويتي أصلي 100%، ودجاج فريش يصل يوميًا".</li>
+          <li>التركيز البصري على تصاعد البخار، حبات العيش النثري المستوية، والتتبيلة، وختام الفيديو بشخص يتذوق المذاق ويصف المكونات والكمية الراهية.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٥</span> محتوى العروض الموجهة ("جمعة الخصومات في جدر")
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: زيادة حجم الفواتير واستهداف الديوانيات والجمعات الكبيرة يوم الجمعة.</div>
+        <h4 class="mini-title" style="margin-top:0;">الأسلوب والتنفيذ</h4>
+        <ul>
+          <li>الترويج لخيار خصم 15% للديوانيات والطلبات الكبيرة، مع تقديم خصم 20% للطلبات التي تتجاوز 70 دينارًا.</li>
+          <li>التركيز على استعداد المطعم التام لتغطية كافة التجمعات بصوانٍ راهية وتغليف حراري ممتاز.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٦</span> المحتوى البيعي المباشر (Direct Sales Content)
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: استعراض المنيو الكامل وزيادة المبيعات المباشرة.</div>
+        <p style="margin:0;"><strong>الأسلوب والتنفيذ:</strong> تصاميم بصرية رفيعة المستوى تظهر الأطباق والمكونات، مع كتابة تفاصيل المكونات والنكهات والمقبلات المرفقة (مثل الدقوس والمرق البيتي).</p>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٧</span> المحتوى التوعوي الشامل ("إحنا مين وبنقدم إيه؟")
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: تعريف الزوار الجدد بجميع أطباق المطعم وعرض القيمة.</div>
+        <p style="margin:0;"><strong>الأسلوب والتنفيذ:</strong> ريل توعوي يستعرض المجبوس، المطبق، الزبيدي، والكبسة البرية، مع التأكيد على جودة اللحم النعيمي والتوصيل لكافة الكويت.</p>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٨</span> التفاعل والمسابقات الوطنية ("خمن المنطقة")
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: رفع معدل التفاعل (Engagement) وزيادة المتابعين بشكل غير مستغل.</div>
+        <p style="margin:0;"><strong>الأسلوب والتنفيذ:</strong> نشر رمز أو معلم لمنطقة كويتية، والمطالبة بتخمين اسم المنطقة في التعليقات لدخول السحب على خصم 15% أو دعوة لغداء مجاني بشرط متابعة الحساب.</p>
+      </div>
+    </details>
+
+    <details class="idea">
+      <summary><span class="idx">٩</span> محتوى الريفيوز وسلسلة "أسئلة جدر" و"الجمعة في جدر" (UGC &amp; Social Proof)
+        <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
+      <div class="idea-body">
+        <div class="goal">الهدف الاستراتيجي: بناء الثقة عبر آراء العملاء الحقيقيين وزيادة زيارات الصالة يوم الجمعة.</div>
+        <h4 class="mini-title" style="margin-top:0;">الأسلوب والتنفيذ</h4>
+        <ul>
+          <li><strong>الريفيوز:</strong> تركيب تسجيلات صوتية لعملاء يشيدون بالطعام على مشاهد عملية تجهيز الوجبة من المطبخ للتقديم.</li>
+          <li><strong>سلسلة "أسئلة جدر" و"الجمعة في جدر":</strong> لقاءات مصورة داخل الصالة يوم الجمعة مع الزوار، طرح أسئلة خفيفة، وتقديم هدايا فورية (خصومات، مقبلات، وجبات مجانية).</li>
+          <li>الإعلان عن "الساعة العشوائية" يوم الجمعة التي يحصل فيها الزوار على خصم 20% ووجبات مجانية.</li>
+        </ul>
+      </div>
+    </details>
+
+    <h3 class="sub-title">7.4 استراتيجية الإعلانات الممولة (Paid Ads Strategy &amp; Budget Allocation)</h3>
+    <p>نقسم الجمهور إلى 3 مراحل متكاملة:</p>
+    <div class="funnel">
+      <div class="stage">
+        <div class="pct">TOF</div>
+        <h5>مرحلة الوعي والوصول</h5>
+        <p style="margin:0 0 10px;"><strong>الهدف:</strong> جذب عملاء جدد يتعرفون على المطعم لأول مرة في الفحيحيل والمناطق المجاورة.</p>
+        <p style="margin:0;"><strong>نوع المحتوى:</strong> فيديوهات "يوم في جدر" (POV)، قصة أصل المجبوس، ورحلة مطبخ جدر.</p>
+      </div>
+      <div class="stage">
+        <div class="pct">MOF</div>
+        <h5>مرحلة التفاعل والاهتمام</h5>
+        <p style="margin:0 0 10px;"><strong>الهدف:</strong> بناء الثقة وإبراز جودة الأكل والخامات وإبراز التفوق التشغيلي (الدليفري).</p>
+        <p style="margin:0;"><strong>نوع المحتوى:</strong> فيديوهات قوة الدليفري، أسئلة جدر، ريفيو العملاء، ومحتوى الجمعات.</p>
+      </div>
+      <div class="stage">
+        <div class="pct">BOF</div>
+        <h5>مرحلة الشراء والتحويل</h5>
+        <p style="margin:0 0 10px;"><strong>الهدف:</strong> دفع العميل لاتخاذ قرار الطلب المباشر الآن عبر الرسائل أو تطبيق كيتا أو زيارة الصالة.</p>
+        <p style="margin:0;"><strong>نوع المحتوى:</strong> التصاميم البيعية، عرض جمعة الخصومات، والمسابقات.</p>
+      </div>
+    </div>
+
+    <h4 class="mini-title">توزيع الميزانية حسب مراحل قمع المبيعات (داخل إنستغرام وتيك توك)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>المرحلة</th><th>النسبة</th><th>الاستخدام</th></tr></thead>
+        <tbody>
+          <tr><td>حملات الوعي — TOF</td><td>30%</td><td>للوصول لعملاء جدد في المنطقة الجغرافية واستعراض جودة المكان.</td></tr>
+          <tr><td>حملات التفاعل والرسائل — MOF</td><td>40%</td><td>لاستهداف المهتمين بالأكل الكويتي وتوليد طلبات عبر الواتساب/الرسائل.</td></tr>
+          <tr><td>حملات إعادة الاستهداف والعروض — BOF</td><td>30%</td><td>للجمهور الذي زار البروفايل أو تفاعل مع المحتوى لإغلاق عملية البيع بعروض الجمعة والبوكسات.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">7.5 دليل الاتجاهات الإخراجية ومراجع التصوير (Visual Direction &amp; References)</h3>
+    <p>يحدد هذا الدليل المعايير البصرية، أسلوب الإضاءة، وحركة الكاميرا المطلوبة لكل نوع من أنواع المحتوى، لضمان خروج جميع المقاطع والتصاميم بهوية بصرية موحدة تعكس جودة مطعم جدر فخار.</p>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">1. اتجاهات تصوير المراجعات وآراء العملاء (Client Reviews Direction)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> الاعتماد على العفوية التامة والتسجيل المباشر غير المتكلف، مع دمج المشاهد الصوتية للعميل على لقطات حية لتجهيز وتنسيق الطبق.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DBONR5iMI9r/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/DavzDquumMU/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+        <a href="https://www.instagram.com/reel/DYJ3Op4MX7k/" target="_blank" rel="noopener">مرجع 3 ↗</a>
+        <a href="https://www.instagram.com/p/DXZHs5KDG11/" target="_blank" rel="noopener">مرجع 4 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">2. اتجاهات تصوير ومراجعات التوصيل السريع (Delivery Experience Direction)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> التركيز البصري الشديد على عملية التغليف الحراري، إظهار تصاعد البخار فور فتح العلبة أمام منزل العميل، والتأكيد على سخونة ونظافة الأكل لمواجهة فجوة المنافسين.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DWyCHdiDOhX/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/DaqC0EJtO4U/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">3. اتجاهات عرض الأطباق والمنيو (Food &amp; Menu Presentation Direction)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> إضاءة دافئة وقريبة من الأطباق (Macro Shots)، التركيز على لمعان الأرز النثري، القوام الخاثر للدقوس والمرق، والكميات الراهية التي تغطي الصواني.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/p/DV9NTEYjPre/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/DU8fUEajP6-/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+        <a href="https://www.instagram.com/reel/DamD-3yoheO/" target="_blank" rel="noopener">مرجع 3 ↗</a>
+        <a href="https://www.instagram.com/reel/DclJnlBNScR/" target="_blank" rel="noopener">مرجع 4 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">4. اتجاهات تصوير كواليس وتحضير الطعام (Kitchen Process Direction)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> إبراز الشفافية والنظافة من داخل المطبخ، استخدام أصوات الحشو وتتبيل اللحم النعيمي والدجاج الفريش، والتصوير بزوايا حركية سريعة تعكس احترافية الطهاة.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DVljnBXjGsH/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/DVbLBurjFmj/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">5. اتجاهات تصوير اللقاءات والمسابقات ("الجمعة في جدر")</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> تصوير ميداني حي داخل الصالة، استخدام ميكروفون مخصص يحمل شعار "جدر فخار"، ولقطات تفاعلية مرحة وسريعة الإيقاع تجمع بين ردود أفعال الزوار وتوزيع الهدايا.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DbN37R-oeOK/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/Da44xCwoTi6/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+        <a href="https://www.instagram.com/reel/DboKcx3tlwI/" target="_blank" rel="noopener">مرجع 3 ↗</a>
+        <a href="https://www.instagram.com/reel/DbVc0_INWqF/" target="_blank" rel="noopener">مرجع 4 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">6. اتجاهات تصوير تجربة الطعام والاستمتاع بالنكهة (Food Taste &amp; Experience Direction)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> التركيز على لقطات الـ Food Porn، انفصال اللحم الذايب عن العظم، صنع اللقمة الراهية بالإيد، وإظهار ملامح السعادة والاستمتاع الحقيقي أثناء التذوق.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DapzMsKstty/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/DaamK3_Ipfy/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+        <a href="https://www.instagram.com/reel/DUGl5VRDB-S/" target="_blank" rel="noopener">مرجع 3 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">7. اتجاهات تصوير المكان والتجربة الكاملة (Full Restaurant Experience POV)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> زوايا واسعة (Wide Shots) تتنقل بأسلوب POV (منظور العميل) بدءًا من الواجهة الخارجية بالفحيحيل، المرور بديكورات الصالة، الترحيب الدافئ من الطاقم، وحتى نزول السفرة المكتملة.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DZzN1gxMWlD/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+        <a href="https://www.instagram.com/reel/DbRQjTHtY2R/" target="_blank" rel="noopener">مرجع 2 ↗</a>
+        <a href="https://www.instagram.com/reel/DXMdS6LjLR-/" target="_blank" rel="noopener">مرجع 3 ↗</a>
+      </div>
+    </div>
+
+    <div class="ref-block">
+      <h4 class="mini-title" style="margin-top:0;">8. اتجاهات المحتوى الترفيهي المربوط بالأكل (Entertainment Food Content)</h4>
+      <p style="margin:0;"><strong>المفهوم الإخراجي:</strong> سكيتشات قصيرة، أفكار مواقف عفوية (مثل تخريب الرجيم أو عزائم أصدقاء الديوانية)، والربط بين الحوار الضاحك وجمال واستثنائية طبق جدر فخار.</p>
+      <div class="ref-links">
+        <a href="https://www.instagram.com/reel/DY78UcUt3sU/" target="_blank" rel="noopener">مرجع 1 ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="sadu"></div>
+
+  <!-- ================= SECTION 8: KPIs, BUDGET & ACTION PLAN ================= -->
+  <section class="plan-section alt" id="sec8">
+    <div class="section-head">
+      <span class="big-num">٨</span>
+      <div>
+        <span class="kicker">KPIs, Budget &amp; Action Plan</span>
+        <h2>قياس الأداء والميزانية وخطة التنفيذ</h2>
+      </div>
+    </div>
+    <p class="lead">يعمل هذا القسم كبوصلة تشغيلية ومالية لإدارة الحملات التسويقية ومتابعة نتائجها ميدانيًا لضمان تحقيق أعلى عائد على الاستثمار التسويقي (ROAS).</p>
+
+    <h3 class="sub-title">8.1 جدول مؤشرات قياس الأداء الرئيسية (KPIs Framework)</h3>
+    <p>تم ربط المؤشرات بالأهداف الثلاثة التي حددناها سابقًا:</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>محور الهدف</th><th>ميتريكس القياس (Metrics)</th><th>مؤشر الأداء المستهدف (Goal KPI)</th><th>التكلفة التقديرية المخططة</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. المبيعات والتحويل المباشر</td>
+            <td>عدد الرسائل والطلبات المباشرة · عدد زيارات الصالة · طلبات التوصيل (كيتا والسائقين)</td>
+            <td>450 طلب/رسالة شهريًا · +25% زيادة في زيارات الصالة · رفع متوسط قيمة الفاتورة (AOV)</td>
+            <td>متوسط تكلفة الطلب (Cost Per Order/Message): 0.400 – 0.800 د.ك.</td>
+          </tr>
+          <tr>
+            <td>2. الوعي والانتشار الواسع</td>
+            <td>مشاهدات الفيديو (Video Views) · الوصول الفريد (Unique Reach) · الانطباعات (Impressions)</td>
+            <td>1 مليون مشاهدة فريدة خلال 3 أشهر · تغطية جغرافية مكثفة لنطاق الفحيحيل والمناطق المجاورة</td>
+            <td>تكلفة الألف مشاهدة (CPM): 0.800 – 1.500 د.ك. · تكلفة مشاهدة الفيديو (CPV): 0.005 د.ك.</td>
+          </tr>
+          <tr>
+            <td>3. بناء الثقة والتفاعل</td>
+            <td>الإعجابات، التعليقات، المشاركات، الحفظ · زيارات البروفايل والكليكات</td>
+            <td>زيادة التفاعل بنسبة 50% خلال 3 أشهر · رفع نسبة حفظ المشاركات (Saves) لمحتوى الجمعات والمنيو</td>
+            <td>تكلفة التفاعل (CPE): 0.050 – 0.100 د.ك. · معدل النقر (CTR): أعلى من 2.5%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="sadu"></div>
+
+  <footer class="plan-footer">
+    <div class="mark">
+      <svg viewBox="0 0 120 120" fill="none">
+        <path d="M40 46 C40 30, 80 30, 80 46 L76 90 C76 100, 44 100, 44 90 Z" fill="none" stroke="#c69a3a" stroke-width="2.5"/>
+        <ellipse cx="60" cy="46" rx="20" ry="6" stroke="#c69a3a" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+    <div class="brand">جدر فخار</div>
+    <p style="max-width:52ch;margin:0 auto;">الاستراتيجية التسويقية — أكل كويتي وخليجي أصيل، بلحم نعيمي محلي ودجاج طازج يوميًا، يوصلك دايركت حار وخنين.</p>
+    <div class="prepared">تم إعداد هذه الاستراتيجية بواسطة مدير التسويق وفريق التسويق</div>
+  </footer>
+
+</main>
+
+<nav class="toc" id="tocNav">
+  <div class="toc-brand">
+    <div class="mark">
+      <svg viewBox="0 0 120 120" fill="none">
+        <path d="M40 46 C40 30, 80 30, 80 46 L76 90 C76 100, 44 100, 44 90 Z" fill="none" stroke="#c69a3a" stroke-width="3"/>
+        <ellipse cx="60" cy="46" rx="20" ry="6" stroke="#c69a3a" stroke-width="3" fill="none"/>
+      </svg>
+    </div>
+    <div>
+      <div class="name">جدر فخار</div>
+      <div class="sub">فهرس الاستراتيجية التسويقية</div>
+    </div>
+  </div>
+  <ul class="toc-list" id="tocList">
+    <li><a href="#cover"><span class="num">٠</span> الغلاف</a></li>
+    <li><a href="#sec1"><span class="num">١</span> الملخص التنفيذي</a></li>
+    <li><a href="#sec2"><span class="num">٢</span> تحليل الوضع الحالي (SWOT)</a></li>
+    <li><a href="#sec2b"><span class="num">٢.١</span> تحليل المنافسين</a></li>
+    <li><a href="#sec3"><span class="num">٣</span> الجمهور المستهدف</a></li>
+    <li><a href="#sec4"><span class="num">٤</span> هوية البراند والتموضع</a></li>
+    <li><a href="#sec5"><span class="num">٥</span> الأهداف ومؤشرات الأداء</a></li>
+    <li><a href="#sec6"><span class="num">٦</span> المزيج التسويقي 4Ps</a></li>
+    <li><a href="#sec7"><span class="num">٧</span> خطة المحتوى والحملات</a></li>
+    <li><a href="#sec8"><span class="num">٨</span> القياس والميزانية</a></li>
+  </ul>
+  <div class="toc-foot">جدر فخار © خطة تسويقية داخلية</div>
+</nav>
+</div>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('tocNav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('.toc-list a').forEach(a=>{
+    a.addEventListener('click', ()=> nav.classList.remove('open'));
+  });
+
+  const links = Array.from(document.querySelectorAll('#tocList a'));
+  const targets = links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      const link = links.find(a=>a.getAttribute('href') === '#'+en.target.id);
+      if(!link) return;
+      if(en.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  targets.forEach(t=>io.observe(t));
+</script>
+</body>
+</html>
